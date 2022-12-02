@@ -30,11 +30,11 @@ const getCards = async (req, res) => {
 
 const deleteCard = async (req, res) => {
   try {
-    const {cardId} = req.params;
+    const { cardId } = req.params;
     const card = await cardNew.findByIdAndRemove(cardId);
     if (card === null) {
-      return res.status(404).json({ message: 'Нет карточки' })
-    };
+      return res.status(404).json({ message: 'Нет карточки' });
+    }
     return res.status(200).json({ message: `Карточка удалена ${cardId}` });
   } catch (e) {
     return res.status(500).json({ message: 'Произошла ошибка' });
@@ -46,7 +46,8 @@ const likeCard = async (req, res) => {
     const changeLikeCard = await cardNew.findByIdAndUpdate(req.params.cardId,
       {
         $addToSet: { likes: req.user._id },
-      }, { new: true },);
+      }, { new: true },
+      );
     if (changeLikeCard === null) {
       return res.status(404).json({ message: 'Карточки не найдены' });
     }
@@ -64,7 +65,8 @@ const dislikeCard = async (req, res) => {
     const changeLikeCard = await cardNew.findByIdAndUpdate(req.params.cardId,
       {
         $pull: { likes: req.user._id },
-      }, { new: true },);
+      }, { new: true },
+      );
     if (changeLikeCard === null) {
       return res.status(404).json({ message: 'Передан несуществующий _id карточки' });
     }
