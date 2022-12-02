@@ -36,16 +36,7 @@ Accept: application/json
 
 DELETE http://localhost:3000/cards/6387bb85fb94777e32ee0887
 Accept: application/json
-###
 
-PATCH http://localhost:3000/users/me
-Accept: application/json
-Content-Type: application/json
-
-{
-  "name": "f2323f" ,
-  "about": "Покемон"
-}
 ###
 
 PUT http://localhost:3000/cards/6387ba7d27b1e5336640e5c6/likes
@@ -58,12 +49,4 @@ Accept: application/json
 
 
 ####
-PATCH http://localhost:3000/users/me/avatar
-Accept: application/json
-Content-Type: application/json
 
-{
-  "avatar": "Оксана ПОКЕМОН"
-}
-
-###
