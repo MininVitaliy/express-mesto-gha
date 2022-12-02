@@ -17,14 +17,12 @@ app.use((req, res, next) => {
 });
 app.use('/users', routerUser);
 app.use('/cards', routerCard);
-app.listen(PORT, function (err) {
-  if(err){
-    console.log("error while starting server");
-  }
-  else{
-    console.log("server has been started at port " + PORT);
-  }
-})
+app.get('*', function (req, res){
+  res.render('common_page/404.html', {
+    status: 404,
+    title: 'NodeBlog',
+  });
+});
 
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
