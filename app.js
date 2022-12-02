@@ -21,7 +21,7 @@ app.use('/cards', routerCard);
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 }, () => {
-  app.listen(PORT,() => {
+  app.listen(PORT, () => {
     console.log(`i am live, port ${PORT}`);
   });
 });
