@@ -1,8 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
-const routerCard = require('./routes/cards.js');
-const routerUser = require('./routes/users.js');
+const routerCard = require('./routes/cards');
+const routerUser = require('./routes/users');
 
 const  PORT = 3000;
 
