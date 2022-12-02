@@ -17,9 +17,15 @@ app.use((req, res, next) => {
 });
 app.use('/users', routerUser);
 app.use('/cards', routerCard);
-app.use('*', () => {
-  (new NotFoundError('Маршрут не найден'));
-});
+app.listen(PORT, function (err) {
+  if(err){
+    console.log("error while starting server");
+  }
+  else{
+    console.log("server has been started at port " + PORT);
+  }
+})
+
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
