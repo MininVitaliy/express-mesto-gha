@@ -47,7 +47,7 @@ const likeCard = async (req, res) => {
       {
         $addToSet: { likes: req.user._id },
       }, { new: true },
-      );
+    );
     if (changeLikeCard === null) {
       return res.status(404).json({ message: 'Карточки не найдены' });
     }
@@ -66,7 +66,7 @@ const dislikeCard = async (req, res) => {
       {
         $pull: { likes: req.user._id },
       }, { new: true },
-      );
+    );
     if (changeLikeCard === null) {
       return res.status(404).json({ message: 'Передан несуществующий _id карточки' });
     }

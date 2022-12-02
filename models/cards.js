@@ -5,11 +5,11 @@ const cardSchema = new mogoose.Schema ({
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 30
+    maxlength: 30,
   },
   link: {
     type: String,
-    required: true
+    required: true,
   },
   owner: {
     type: mogoose.Schema.Types.ObjectId,
@@ -18,16 +18,16 @@ const cardSchema = new mogoose.Schema ({
   likes: [{
     type: mogoose.Schema.Types.ObjectId,
     required: true,
-    default: []
+    default: [],
   }],
   createdAt: {
     type: Date,
     required: true,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 const cardNew = mogoose.model('card', cardSchema);
 module.exports = {
-  cardNew
+  cardNew,
 }

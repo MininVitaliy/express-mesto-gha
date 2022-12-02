@@ -63,7 +63,6 @@ const updateAvatar = async (req, res) => {
     );
     return res.status(200).json(changeProfile);
   } catch (e) {
-    console.log(e)
     if (e.name === 'ValidationError') {
       return res.status(400).send({ message: 'Переданы некорректные данные в методы обновления аватара пользователя' });
     }
