@@ -38,14 +38,7 @@ DELETE http://localhost:3000/cards/6387bb85fb94777e32ee0887
 Accept: application/json
 ###
 
-PATCH http://localhost:3000/users/me
-Accept: application/json
-Content-Type: application/json
-
-{
-  "name": "f2asasas323f" ,
-  "about": "Покемон"
-}
+#
 
 ###
 
@@ -59,13 +52,5 @@ Accept: application/json
 
 
 ####
-
-PATCH http://localhost:3000/users/me/avatar
-Accept: application/json
-Content-Type: application/json
-
-{
-  "avatar": "Оксанasasа ПОКЕМОН"
-}
-
+#
 ###
