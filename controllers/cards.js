@@ -53,6 +53,9 @@ const likeCard = async (req, res) => {
     }
     return res.status(200).json(changeLikeCard);
   } catch (e) {
+    if (req.params.cardId.length > 24 || req.params.cardId.length < 24) {
+      return res.status(400).json({ message: 'Переданы некорректные данные iD карточки' });
+    }
     return res.status(500).json({ message: 'Произошла ошибка' });
   }
 };
@@ -72,6 +75,9 @@ const dislikeCard = async (req, res) => {
     }
     return res.status(200).json(changeLikeCard);
   } catch (e) {
+    if (req.params.cardId.length > 24 || req.params.cardId.length < 24) {
+      return res.status(400).json({ message: 'Переданы некорректные данные iD карточки' });
+    }
     return res.status(500).json({ message: 'Произошла ошибка' });
   }
 };

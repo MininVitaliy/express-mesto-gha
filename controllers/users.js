@@ -33,6 +33,9 @@ const getUser = async (req, res) => {
     }
     return res.status(200).json(user);
   } catch (e) {
+    if (req.params.userId.length > 24 || req.params.userId.length < 24) {
+      return res.status(400).json({ message: 'Переданы некорректные данные iD' });
+    }
     return res.status(500).json({ message: 'Произощла ошибка' })
   }
 };
@@ -42,7 +45,7 @@ const updateProfile = async (req, res) => {
     const changeProfile = await userNew.findByIdAndUpdate(req.user._id,
       {
         name: req.body.name,
-        about:req.body.about,
+        about: req.body.about,
       }, { new: true, runValidators: true },
     );
     return res.status(200).json(changeProfile);

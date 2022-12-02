@@ -13,7 +13,7 @@ Content-Type: application/json
   "avatar": "https://ic.pics.livejournal.com/bav_eot/44066703/942996/942996_original.jpg"
 }
 ###
-GET http://localhost:3000/users/638661c518c66c218a8bd02e
+GET http://localhost:3000/users/638661c518c66c218a8bd02
 Accept: application/json
 
 ###
