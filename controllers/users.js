@@ -43,14 +43,14 @@ const updateProfile = async (req, res) => {
       {
         name: req.body.name,
         about:req.body.about,
-      }, {new: true, runValidators: true},
+      }, { new: true, runValidators: true },
     );
     return res.status(200).json(changeProfile);
   } catch (e) {
     if (e.name === 'ValidationError') {
       return res.status(400).send({ message: 'Переданы некорректные данные в методы обновления профиля пользователя' });
     }
-    return res.status(500).json({message: 'Произошла ошибка'});
+    return res.status(500).json({ message: 'Произошла ошибка' });
   }
 };
 
