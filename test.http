@@ -1,0 +1,71 @@
+GET http://localhost:3000/users
+Accept: application/json
+
+###
+
+POST http://localhost:3000/users
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "aasaskkkыфыфыфk",
+  "about": "Минин",
+  "avatar": "https://ic.pics.livejournal.com/bav_eot/44066703/942996/942996_original.jpg"
+}
+###
+GET http://localhost:3000/users/638661c518c66c218a8bd02e
+Accept: application/json
+
+###
+
+POST http://localhost:3000/cards
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Sвввasasaв" ,
+  "link": "https://ic.pics.livejournal.com/bav_eot/44066703/942996/942996_original.jpg"
+}
+
+
+###
+GET http://localhost:3000/cards
+Accept: application/json
+
+###
+
+DELETE http://localhost:3000/cards/6387bb85fb94777e32ee0887
+Accept: application/json
+###
+
+PATCH http://localhost:3000/users/me
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "f2asasas323f" ,
+  "about": "Покемон"
+}
+
+###
+
+PUT http://localhost:3000/cards/6387ba7d27b1e5336640e5c6/likes
+Accept: application/json
+
+###
+
+DELETE http://localhost:3000/cards/6387ba7d27b1e5336640e5c6/likes
+Accept: application/json
+
+
+####
+
+PATCH http://localhost:3000/users/me/avatar
+Accept: application/json
+Content-Type: application/json
+
+{
+  "avatar": "Оксанasasа ПОКЕМОН"
+}
+
+###
