@@ -11,9 +11,8 @@ const createCard = async (req, res) => {
   } catch (e) {
     if (e.name === 'ValidationError') {
       return res.status(400).send({ message: 'Переданы некорректные данные в методы создания карточки' });
-    } else {
-      return res.status(500).json({ message: 'Произошла ошибка' });
     }
+    return res.status(500).json({ message: 'Произошла ошибка' });
   }
 };
 

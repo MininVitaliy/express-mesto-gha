@@ -19,9 +19,8 @@ const createUser = async (req, res) => {
   } catch (e) {
     if (e.name === 'ValidationError') {
       return res.status(400).send({ message: 'Переданы некорректные данные в методы создания пользователя' });
-    } else {
-      return res.status(500).json({ message: 'Произошла ошибка' });
     }
+    return res.status(500).json({ message: 'Произошла ошибка' });
   }
 };
 
@@ -48,9 +47,8 @@ const updateProfile = async (req, res) => {
   } catch (e) {
     if (e.name === 'ValidationError') {
       return res.status(400).send({ message: 'Переданы некорректные данные в методы обновления профиля пользователя' });
-    } else {
-      return res.status(500).json({message: 'Произошла ошибка'});
     }
+    return res.status(500).json({message: 'Произошла ошибка'});
   }
 };
 
@@ -64,9 +62,8 @@ const updateAvatar = async (req, res) => {
     console.log(e)
     if (e.name === 'ValidationError') {
       return res.status(400).send({ message: 'Переданы некорректные данные в методы обновления аватара пользователя' });
-    } else {
-      return res.status(500).json({ message: 'Произошла ошибка' });
     }
+    return res.status(500).json({ message: 'Произошла ошибка' });
   }
 };
 
