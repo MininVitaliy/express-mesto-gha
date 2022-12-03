@@ -50,3 +50,9 @@ Accept: application/json
 
 ####
 
+PATCH http://localhost:3000/indiasasasdas/saasdds
+Accept: application/json
+
+
+####
+

@@ -17,11 +17,9 @@ app.use((req, res, next) => {
 });
 app.use('/users', routerUser);
 app.use('/cards', routerCard);
-app.get('*', function (req, res){
-  res.render('common_page/404.html', {
-    status: 404,
-    title: 'NodeBlog',
-  });
+app.use('*', function (req, res){
+  console.log()
+  return res.status(404).json({ message: 'Нет такой стараницы приложения' });
 });
 
 
