@@ -62,7 +62,7 @@ const updateAvatar = async (req, res) => {
     const changeProfile = await userNew.findByIdAndUpdate(req.user._id,
       {
         avatar: req.body.avatar,
-      }, {new: true, runValidators: true}
+      }, { new: true, runValidators: true }
     );
     return res.status(200).json(changeProfile);
   } catch (e) {

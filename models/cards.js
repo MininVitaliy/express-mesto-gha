@@ -1,6 +1,6 @@
 const mogoose = require('mongoose');
 
-const cardSchema = new mogoose.Schema ({
+const cardSchema = new mogoose.Schema({
   name: {
     type: String,
     required: true,
@@ -30,4 +30,4 @@ const cardSchema = new mogoose.Schema ({
 const cardNew = mogoose.model('card', cardSchema);
 module.exports = {
   cardNew,
-}
+};
