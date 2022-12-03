@@ -17,7 +17,7 @@ app.use((req, res, next) => {
 });
 app.use('/users', routerUser);
 app.use('/cards', routerCard);
-app.use('*',  (req, res) => {
+app.use( '*', (req, res) => {
   return res.status(404).json({ message: 'Нет такой стараницы приложения' });
 });
 
