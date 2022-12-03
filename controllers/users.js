@@ -42,11 +42,13 @@ const getUser = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const changeProfile = await userNew.findByIdAndUpdate(req.user._id,
+    const changeProfile = await userNew.findByIdAndUpdate(
+      req.user._id,
       {
         name: req.body.name,
         about: req.body.about,
-      }, { new: true, runValidators: true },
+      },
+      { new: true, runValidators: true },
     );
     return res.status(200).json({ changeProfile });
   } catch (e) {
@@ -59,10 +61,12 @@ const updateProfile = async (req, res) => {
 
 const updateAvatar = async (req, res) => {
   try {
-    const changeProfile = await userNew.findByIdAndUpdate(req.user._id,
+    const changeProfile = await userNew.findByIdAndUpdate(
+      req.user._id,
       {
         avatar: req.body.avatar,
-      }, { new: true, runValidators: true }
+      },
+      { new: true, runValidators: true },
     );
     return res.status(200).json(changeProfile);
   } catch (e) {

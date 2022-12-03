@@ -46,10 +46,12 @@ const deleteCard = async (req, res) => {
 
 const likeCard = async (req, res) => {
   try {
-    const changeLikeCard = await cardNew.findByIdAndUpdate(req.params.cardId,
+    const changeLikeCard = await cardNew.findByIdAndUpdate(
+      req.params.cardId,
       {
         $addToSet: { likes: req.user._id },
-      }, { new: true },
+      },
+      { new: true },
     );
     if (changeLikeCard === null) {
       return res.status(404).json({ message: 'Карточки не найдены' });
@@ -68,10 +70,12 @@ const dislikeCard = async (req, res) => {
     if (req.user._id === null || req.user._id.length > 24) {
       return res.status(404).json({ message: 'Передан несуществующий _id карточки' });
     }
-    const changeLikeCard = await cardNew.findByIdAndUpdate(req.params.cardId,
+    const changeLikeCard = await cardNew.findByIdAndUpdate(
+      req.params.cardId,
       {
         $pull: { likes: req.user._id },
-      }, { new: true },
+      },
+      { new: true },
     );
     if (changeLikeCard === null) {
       return res.status(404).json({ message: 'Передан несуществующий _id карточки' });
