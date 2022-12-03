@@ -36,7 +36,7 @@ const getUser = async (req, res) => {
     if (req.params.userId.length > 24 || req.params.userId.length < 24) {
       return res.status(400).json({ message: 'Переданы некорректные данные iD' });
     }
-    return res.status(500).json({ message: 'Произощла ошибка' })
+    return res.status(500).json({ message: 'Произощла ошибка' });
   }
 };
 
