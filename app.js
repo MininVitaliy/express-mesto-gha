@@ -22,7 +22,6 @@ app.use('*', function (req, res){
   return res.status(404).json({ message: 'Нет такой стараницы приложения' });
 });
 
-
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 }, () => {
