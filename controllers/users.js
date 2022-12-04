@@ -1,14 +1,12 @@
 const { userNew } = require('../models/users');
+const infoError = require('./constants');
 
 const getUsers = async (req, res) => {
   try {
     const users = await userNew.find({});
-    if (users === null) {
-      return res.status(404).json({ message: 'Пользователи не найдены' });
-    }
     return res.status(200).json(users);
   } catch (e) {
-    return res.status(500).json({ message: 'Произошла ошибка' });
+    return res.status(500).json({ message: infoError.general.error });
   }
 };
 
@@ -18,9 +16,9 @@ const createUser = async (req, res) => {
     return res.status(200).json(userCreate);
   } catch (e) {
     if (e.name === 'ValidationError') {
-      return res.status(400).json({ message: 'Переданы некорректные данные в методы создания пользователя' });
+      return res.status(400).json({ message: infoError.users.createUser });
     }
-    return res.status(500).json({ message: 'Произошла ошибка' });
+    return res.status(500).json({ message: infoError.general.error });
   }
 };
 
@@ -29,14 +27,14 @@ const getUser = async (req, res) => {
     const { userId } = req.params;
     const user = await userNew.findById(userId);
     if (user === null) {
-      return res.status(404).json({ message: 'Пользователь не найден' });
+      return res.status(404).json({ message: infoError.users.userNo });
     }
     return res.status(200).json(user);
   } catch (e) {
-    if (req.params.userId.length > 24 || req.params.userId.length < 24) {
-      return res.status(400).json({ message: 'Переданы некорректные данные iD' });
+    if (e.name === 'CastError') {
+      return res.status(400).json({ message: infoError.general.cardIdUncorrected });
     }
-    return res.status(500).json({ message: 'Произощла ошибка' });
+    return res.status(500).json({ message: infoError.general.error });
   }
 };
 
@@ -50,12 +48,18 @@ const updateProfile = async (req, res) => {
       },
       { new: true, runValidators: true },
     );
+    if (changeProfile === null) {
+      return res.status(404).json({ message: infoError.users.userNo });
+    }
     return res.status(200).json({ changeProfile });
   } catch (e) {
-    if (e.name === 'ValidationError') {
-      return res.status(400).json({ message: 'Переданы некорректные данные в методы обновления профиля пользователя' });
+    if (e.name === 'CastError') {
+      return res.status(400).json({ message: infoError.general.cardIdUncorrected });
     }
-    return res.status(500).json({ message: 'Произошла ошибка' });
+    if (e.name === 'ValidationError') {
+      return res.status(400).json({ message: infoError.users.userUpdate });
+    }
+    return res.status(500).json({ message: infoError.general.error });
   }
 };
 
@@ -68,12 +72,18 @@ const updateAvatar = async (req, res) => {
       },
       { new: true, runValidators: true },
     );
+    if (changeProfile === null) {
+      return res.status(404).json({ message: infoError.users.userNo });
+    }
     return res.status(200).json(changeProfile);
   } catch (e) {
-    if (e.name === 'ValidationError') {
-      return res.status(400).json({ message: 'Переданы некорректные данные в методы обновления аватара пользователя' });
+    if (e.name === 'CastError') {
+      return res.status(400).json({ message: infoError.general.cardIdUncorrected });
     }
-    return res.status(500).json({ message: 'Произошла ошибка' });
+    if (e.name === 'ValidationError') {
+      return res.status(400).json({ message: infoError.users.userUpdateAvatar });
+    }
+    return res.status(500).json({ message: infoError.general.error });
   }
 };
 

@@ -8,8 +8,8 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "aasaskkkыфыфыфk",
-  "about": "Минин",
+  "name": "ТЕСТ",
+  "about": "ТЕСТ",
   "avatar": "https://ic.pics.livejournal.com/bav_eot/44066703/942996/942996_original.jpg"
 }
 ###
@@ -23,7 +23,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "Sвввasasaв" ,
+  "name": "Тестqqqsasasasasasa11112" ,
   "link": "https://ic.pics.livejournal.com/bav_eot/44066703/942996/942996_original.jpg"
 }
 
@@ -34,17 +34,17 @@ Accept: application/json
 
 ###
 
-DELETE http://localhost:3000/cards/6387bb85fb94777e32ee0887
+DELETE http://localhost:3000/cards/638c79085c4fddaa69902477
 Accept: application/json
 
 ###
 
-PUT http://localhost:3000/cards/6387ba7d27b1e5336640e5c6/likes
+PUT http://localhost:3000/cards/638c79545c4fddaa69902479/likes
 Accept: application/json
 
 ###
 
-DELETE http://localhost:3000/cards/6387ba7d27b1e5336640e5c6/likes
+DELETE http://localhost:3000/cards/638c79545c4fddaa69902479/likes
 Accept: application/json
 
 
@@ -56,3 +56,12 @@ Accept: application/json
 
 ####
 
+PATCH http://localhost:3000/users/me
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "a22",
+  "about": "Минин"
+}
+###

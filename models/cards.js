@@ -13,16 +13,16 @@ const cardSchema = new mogoose.Schema({
   },
   owner: {
     type: mogoose.Schema.Types.ObjectId,
+    ref: 'user',
     required: true,
   },
   likes: [{
     type: mogoose.Schema.Types.ObjectId,
-    required: true,
+    ref: 'user',
     default: [],
   }],
   createdAt: {
     type: Date,
-    required: true,
     default: Date.now,
   },
 });
