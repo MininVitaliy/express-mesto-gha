@@ -1,5 +1,12 @@
 const { cardNew } = require('../models/cards');
-const infoError = require('./constants');
+const {
+  infoError,
+  ERROR_CODE,
+  ERROR_SERVER,
+  ERROR_NOT_FOUND,
+  SUCCESS,
+  CREATED,
+} = require('../constants');
 
 const createCard = async (req, res) => {
   try {
@@ -8,21 +15,21 @@ const createCard = async (req, res) => {
       link: req.body.link,
       owner: req.user._id,
     });
-    return res.status(201).json(cardUpdate);
+    return res.status(CREATED).json(cardUpdate);
   } catch (e) {
     if (e.name === 'ValidationError') {
-      return res.status(400).json({ message: infoError.cards.createCard });
+      return res.status(ERROR_CODE).json({ message: infoError.cards.createCard });
     }
-    return res.status(500).json({ message: infoError.general.error });
+    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 
 const getCards = async (req, res) => {
   try {
     const cards = await cardNew.find({}).populate(['owner', 'likes']);
-    return res.status(200).json(cards);
+    return res.status(SUCCESS).json(cards);
   } catch (e) {
-    return res.status(500).json({ message: infoError.general.error });
+    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 
@@ -31,14 +38,14 @@ const deleteCard = async (req, res) => {
     const { cardId } = req.params;
     const card = await cardNew.findByIdAndRemove(cardId);
     if (card === null) {
-      return res.status(404).json({ message: infoError.cards.cardNo });
+      return res.status(ERROR_NOT_FOUND).json({ message: infoError.cards.cardNo });
     }
-    return res.status(200).json({ message: infoError.cards.cardDelete });
+    return res.status(SUCCESS).json({ message: infoError.cards.cardDelete });
   } catch (e) {
     if (e.name === 'CastError') {
-      return res.status(400).json({ message: infoError.general.cardIdUncorrected });
+      return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
     }
-    return res.status(500).json({ message: infoError.general.error });
+    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 
@@ -52,21 +59,21 @@ const likeCard = async (req, res) => {
       { new: true },
     ).populate(['owner', 'likes']);
     if (changeLikeCard === null) {
-      return res.status(404).json({ message: infoError.cards.cardNo });
+      return res.status(ERROR_NOT_FOUND).json({ message: infoError.cards.cardNo });
     }
-    return res.status(200).json(changeLikeCard);
+    return res.status(SUCCESS).json(changeLikeCard);
   } catch (e) {
     if (e.name === 'CastError') {
-      return res.status(400).json({ message: infoError.general.cardIdUncorrected });
+      return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
     }
-    return res.status(500).json({ message: infoError.general.error });
+    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 
 const dislikeCard = async (req, res) => {
   try {
     if (req.user._id === null || req.user._id.length > 24) {
-      return res.status(404).json({ message: infoError.cards.cardIdMissing });
+      return res.status(ERROR_NOT_FOUND).json({ message: infoError.cards.cardIdMissing });
     }
     const changeLikeCard = await cardNew.findByIdAndUpdate(
       req.params.cardId,
@@ -76,14 +83,14 @@ const dislikeCard = async (req, res) => {
       { new: true },
     ).populate(['owner', 'likes']);
     if (changeLikeCard === null) {
-      return res.status(404).json({ message: infoError.cards.cardIdMissing });
+      return res.status(ERROR_NOT_FOUND).json({ message: infoError.cards.cardIdMissing });
     }
-    return res.status(200).json(changeLikeCard);
+    return res.status(SUCCESS).json(changeLikeCard);
   } catch (e) {
     if (e.name === 'CastError') {
-      return res.status(400).json({ message: infoError.general.cardIdUncorrected });
+      return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
     }
-    return res.status(500).json({ message: infoError.general.error });
+    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 

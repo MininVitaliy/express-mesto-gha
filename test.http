@@ -8,7 +8,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "ТЕСТ",
+  "name": "Т",
   "about": "ТЕСТ",
   "avatar": "https://ic.pics.livejournal.com/bav_eot/44066703/942996/942996_original.jpg"
 }
