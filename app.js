@@ -38,7 +38,7 @@ app.post('/signup', celebrate({
     }),
     password: Joi.string().required(),
     avatar: Joi.string().custom((value, helpers) => {
-      if (AVATAR_REGEX.test(value)) {
+      if (/^https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-.~:/?#[\]@!$&'()*+,;=]{2,}#?$/.test(value)) {
         return value;
       }
       return helpers.message('Некорректная ссылка');
