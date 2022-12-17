@@ -63,7 +63,7 @@ const getUser = async (req, res, next) => {
     const user = await userNew.findById(_id);
     const { name, about, avatar } = user;
     if (user === null) {
-      throw new NotFoundError('Пользователь не найден');
+      return  new NotFoundError('Пользователь не найден');
     }
     return  res.status(SUCCESS).json({ name, about, avatar });
   } catch (e) {
