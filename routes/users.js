@@ -8,7 +8,11 @@ const {
 } = require('../controllers/users');
 const { celebrate, Joi} = require('celebrate')
 
-routerUser.get('/', getUsers);
+routerUser.get('/', celebrate({
+  params: Joi.object().keys({
+    userId: Joi.string().length(24).hex(),
+  }),
+}), getUsers);
 //routerUser.post('/', createUser);
 //routerUser.get('/:userId', getUser);
 routerUser.get('/me', celebrate({
