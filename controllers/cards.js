@@ -6,9 +6,11 @@ const {
   ERROR_NOT_FOUND,
   SUCCESS,
   CREATED,
+  UNAUTHORIZED,
 } = require('../constants');
+//const { userNew } = require('../models/users');
 
-const createCard = async (req, res) => {
+const createCard = async (req, res, next) => {
   try {
     const cardUpdate = await cardNew.create({
       name: req.body.name,
@@ -17,39 +19,43 @@ const createCard = async (req, res) => {
     });
     return res.status(CREATED).json(cardUpdate);
   } catch (e) {
-    if (e.name === 'ValidationError') {
-      return res.status(ERROR_CODE).json({ message: infoError.cards.createCard });
-    }
-    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
+    next(e);
   }
 };
 
-const getCards = async (req, res) => {
+const getCards = async (req, res, next) => {
   try {
     const cards = await cardNew.find({}).populate(['owner', 'likes']);
     return res.status(SUCCESS).json(cards);
   } catch (e) {
-    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
+    next(e)
+    //return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 
-const deleteCard = async (req, res) => {
+const deleteCard = async (req, res, next) => {
   try {
     const { cardId } = req.params;
-    const card = await cardNew.findByIdAndRemove(cardId);
-    if (card === null) {
-      return res.status(ERROR_NOT_FOUND).json({ message: infoError.cards.cardNo });
+    const cardInfo = await cardNew.findById(cardId);
+    if (cardInfo.owner.toString() === req.user._id ) {
+      const card = await cardNew.findByIdAndRemove(cardId);
+      if (card === null) {
+        return res.status(ERROR_NOT_FOUND).json({message: 'Карточка не найдена'});
+      }
+      return res.status(SUCCESS).json({message: 'Карточка удалена'});
+    } else {
+      return res.status(UNAUTHORIZED).json({message: "Карточку нельзя удалять данным пользователем"});
     }
-    return res.status(SUCCESS).json({ message: infoError.cards.cardDelete });
   } catch (e) {
-    if (e.name === 'CastError') {
-      return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
-    }
-    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
+    next(e)
+    //if (e.name === 'CastError') {
+      //return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
+    //}
+    //return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 
-const likeCard = async (req, res) => {
+const likeCard = async (req, res, next) => {
   try {
     const changeLikeCard = await cardNew.findByIdAndUpdate(
       req.params.cardId,
@@ -59,21 +65,22 @@ const likeCard = async (req, res) => {
       { new: true },
     ).populate(['owner', 'likes']);
     if (changeLikeCard === null) {
-      return res.status(ERROR_NOT_FOUND).json({ message: infoError.cards.cardNo });
+      return res.status(ERROR_NOT_FOUND).json({ message:'Карточка не найдена' });
     }
     return res.status(SUCCESS).json(changeLikeCard);
   } catch (e) {
-    if (e.name === 'CastError') {
-      return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
-    }
-    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
+    next(e)
+    //if (e.name === 'CastError') {
+      //return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
+    //}
+    //return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 
-const dislikeCard = async (req, res) => {
+const dislikeCard = async (req, res, next) => {
   try {
     if (req.user._id === null || req.user._id.length > 24) {
-      return res.status(ERROR_NOT_FOUND).json({ message: infoError.cards.cardIdMissing });
+      return res.status(ERROR_NOT_FOUND).json({ message: 'Передан несуществующий _id карточки' });
     }
     const changeLikeCard = await cardNew.findByIdAndUpdate(
       req.params.cardId,
@@ -83,14 +90,15 @@ const dislikeCard = async (req, res) => {
       { new: true },
     ).populate(['owner', 'likes']);
     if (changeLikeCard === null) {
-      return res.status(ERROR_NOT_FOUND).json({ message: infoError.cards.cardIdMissing });
+      return  res.status(ERROR_NOT_FOUND).json({ message: 'Передан несуществующий _id карточки' });
     }
     return res.status(SUCCESS).json(changeLikeCard);
   } catch (e) {
-    if (e.name === 'CastError') {
-      return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
-    }
-    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
+    next(e)
+    //if (e.name === 'CastError') {
+      //return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
+    //}
+    //return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 

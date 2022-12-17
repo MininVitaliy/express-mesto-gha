@@ -7,45 +7,74 @@ const {
   SUCCESS,
   CREATED,
 } = require('../constants');
+const bcrypt = require('bcryptjs');
+//const jwt = require('jsonwebtoken');
 
-const getUsers = async (req, res) => {
+const { createToken } = require('../middlewares/auth')
+
+const getUsers = async (req, res, next) => {
   try {
     const users = await userNew.find({});
     return res.status(SUCCESS).json(users);
   } catch (e) {
-    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
+    //return res.status(ERROR_SERVER).json({ message: infoError.general.error });
+    next(e)
   }
 };
 
-const createUser = async (req, res) => {
-  try {
-    const userCreate = await userNew.create(req.body);
-    return res.status(CREATED).json(userCreate);
-  } catch (e) {
-    if (e.name === 'ValidationError') {
-      return res.status(ERROR_CODE).json({ message: infoError.users.createUser });
-    }
-    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
-  }
+const createUser = (req, res, next) => {
+  const {
+    name,
+    about,
+    avatar,
+    email,
+    password,
+  } = req.body;
+  bcrypt.hash(password, 10)
+    .then((hash) => userNew.create({
+      name,
+      about,
+      avatar,
+      email,
+      password: hash,
+    }))
+    .then(() => res.status(CREATED).json({
+      name,
+      about,
+      avatar,
+      email,
+    }))
+    .catch((err) => {
+      /*if (err.name === 'ValidationError') {
+        res.status(ERROR_CODE).json({ message: infoError.users.createUser });
+        return;
+      }
+      if (err.name === 'MongoError' || err.code === 11000) {
+        res.status(409).json({ message: 'Указанный email уже занят' });
+      } else res.status(ERROR_SERVER).json({ message: infoError.general.error });*/
+      next(err)
+    });
 };
 
-const getUser = async (req, res) => {
+const getUser = async (req, res, next) => {
   try {
-    const { userId } = req.params;
-    const user = await userNew.findById(userId);
+    const { _id } = req.user;
+    const user = await userNew.findById(_id);
     if (user === null) {
       return res.status(ERROR_NOT_FOUND).json({ message: infoError.users.userNo });
     }
-    return res.status(SUCCESS).json(user);
+    return res.status(SUCCESS).json({ user });
   } catch (e) {
-    if (e.name === 'CastError') {
+    /*if (e.name === 'CastError') {
       return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
     }
     return res.status(ERROR_SERVER).json({ message: infoError.general.error });
+    */
+    next(e);
   }
 };
 
-const updateProfile = async (req, res) => {
+const updateProfile = async (req, res, next) => {
   try {
     const changeProfile = await userNew.findByIdAndUpdate(
       req.user._id,
@@ -60,17 +89,19 @@ const updateProfile = async (req, res) => {
     }
     return res.status(SUCCESS).json({ changeProfile });
   } catch (e) {
-    if (e.name === 'CastError') {
+    next(e)
+  }
+    /*if (e.name === 'CastError') {
       return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
     }
     if (e.name === 'ValidationError') {
       return res.status(ERROR_CODE).json({ message: infoError.users.userUpdate });
     }
     return res.status(ERROR_SERVER).json({ message: infoError.general.error });
-  }
+  }*/
 };
 
-const updateAvatar = async (req, res) => {
+const updateAvatar = async (req, res, next) => {
   try {
     const changeProfile = await userNew.findByIdAndUpdate(
       req.user._id,
@@ -84,14 +115,36 @@ const updateAvatar = async (req, res) => {
     }
     return res.status(SUCCESS).json(changeProfile);
   } catch (e) {
-    if (e.name === 'CastError') {
+    next(e)
+  }
+    /*if (e.name === 'CastError') {
       return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
     }
     if (e.name === 'ValidationError') {
       return res.status(ERROR_CODE).json({ message: infoError.users.userUpdateAvatar });
     }
     return res.status(ERROR_SERVER).json({ message: infoError.general.error });
-  }
+  }*/
+};
+
+const login = (req, res, next) => {
+  const { email, password } = req.body;
+  console.log(email, password)
+  return  userNew.findUserByCredentials(email, password)
+    .then((user) => {
+      /*const token = jwt.sign(
+        { _id: user._id },
+        '25a387bbe1292045e562ecbfe86f77978e6835861a1831711eb3c6b1a27ab956',
+        { expiresIn: '7d'},
+      );*/
+      const token = createToken({ _id: user._id });
+      res.status(201).send({ token });
+    })
+    .catch((e) => {
+      const err = new Error('Необходима авторизация');
+      err.statusCode = 401;
+      next(err);
+    });
 };
 
 module.exports = {
@@ -100,4 +153,5 @@ module.exports = {
   getUser,
   updateProfile,
   updateAvatar,
+  login,
 };

@@ -1,29 +1,33 @@
 GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk1ZmFlNDkwY2RiMGRlMWM4ODZjM2QiLCJpYXQiOjE2NzA4NjkyNTksImV4cCI6MTY3MTQ3NDA1OX0.nHcKs385f_KQKUDVv0fT5jffMQUVJSmbPXU_ABj9y6o
 Accept: application/json
 
-###
 
-POST http://localhost:3000/users
-Accept: application/json
-Content-Type: application/json
-
-{
-  "name": "Т",
-  "about": "ТЕСТ",
-  "avatar": "https://ic.pics.livejournal.com/bav_eot/44066703/942996/942996_original.jpg"
-}
 ###
-GET http://localhost:3000/users/638661c518c66c218a8bd02
+GET http://localhost:3000/users/639582cb4a666806c9940dc6
 Accept: application/json
 
 ###
 
 POST http://localhost:3000/cards
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk1ZmFlNDkwY2RiMGRlMWM4ODZjM2QiLCJpYXQiOjE2NzA4NjkyNTksImV4cCI6MTY3MTQ3NDA1OX0.nHcKs385f_KQKUDVv0fT5jffMQUVJSmbPXU_ABj9y6o
 Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "Тестqqqsasasasasasa11112" ,
+  "name": "DASDAS" ,
+  "link": "https://ic.pics.livejournal.com/bav_eot/44066703/942996/942996_original.jpg"
+}
+
+
+###
+POST http://localhost:3000/cards
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzlkZDQ5NzhlYzA3MTNjNDQ4NWY0MzAiLCJpYXQiOjE2NzEyODc5OTQsImV4cCI6MTY3MTg5Mjc5NH0.B93VNkxWJuthkOrX16PuWDVkw6Nwfy9KzcMXwcgAvIk
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "DASDAS" ,
   "link": "https://ic.pics.livejournal.com/bav_eot/44066703/942996/942996_original.jpg"
 }
 
@@ -34,19 +38,22 @@ Accept: application/json
 
 ###
 
-DELETE http://localhost:3000/cards/638c79085c4fddaa69902477
-Accept: application/json
+DELETE http://localhost:3000/cards/639dd4e68ec0713c4485f433
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk1ZmFlNDkwY2RiMGRlMWM4ODZjM2QiLCJpYXQiOjE2NzA4NjkyNTksImV4cCI6MTY3MTQ3NDA1OX0.nHcKs385f_KQKUDVv0fT5jffMQUVJSmbPXU_ABj9y6o
+//Accept: application/json
+
 
 ###
 
-PUT http://localhost:3000/cards/638c79545c4fddaa69902479/likes
-Accept: application/json
+PUT http://localhost:3000/cards/639b63df02d539e8e68437d1/likes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk3N2VlZjRkMTU1OWQxMzdjZWI4MmQiLCJpYXQiOjE2NzA4NzI4NDIsImV4cCI6MTY3MTQ3NzY0Mn0.8bbWIytTSZufcXKqfr9YfS-vR3iXH9uipzJAS6eYxF8
+//Accept: application/json
 
 ###
 
-DELETE http://localhost:3000/cards/638c79545c4fddaa69902479/likes
-Accept: application/json
-
+DELETE http://localhost:3000/cards/639b63df02d539e8e68437d1/likes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk3N2VlZjRkMTU1OWQxMzdjZWI4MmQiLCJpYXQiOjE2NzA4NzI4NDIsImV4cCI6MTY3MTQ3NzY0Mn0.8bbWIytTSZufcXKqfr9YfS-vR3iXH9uipzJAS6eYxF8
+//Accept: application/json
 
 ####
 
@@ -57,11 +64,50 @@ Accept: application/json
 ####
 
 PATCH http://localhost:3000/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk3N2VlZjRkMTU1OWQxMzdjZWI4MmQiLCJpYXQiOjE2NzA4NzI4NDIsImV4cCI6MTY3MTQ3NzY0Mn0.8bbWIytTSZufcXKqfr9YfS-vR3iXH9uipzJAS6eYxF8
+//Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Tddsdsdssds",
+  "about": "PERERERERERERE"
+}
+###
+POST http://localhost:3000/signup
 Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "a22",
-  "about": "Минин"
+  "about": "Oddddddd",
+  "avatar": "https://ic.pics.livejournal.com/bav_eot/44066703/942996/942996_original.jpg",
+  "email": "vitl@ddwdw.op",
+  "password": "mnlmkkdadjja"
 }
+###
+
+POST http://localhost:3000/signin
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "vitl@ddwdw.op",
+  "password": "mnlmkkdadjja"
+}
+###
+//"name": "",
+  //"about": "",
+  //"avatar": ,
+GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk1ZmFlNDkwY2RiMGRlMWM4ODZjM2QiLCJpYXQiOjE2NzA4NjkyNTksImV4cCI6MTY3MTQ3NDA1OX0.nHcKs385f_KQKUDVv0fT5jffMQUVJSmbPXU_ABj9y6o
+
+###
+
+GET http://localhost:3000/cards
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk1ZmFlNDkwY2RiMGRlMWM4ODZjM2QiLCJpYXQiOjE2NzA4NjkyNTksImV4cCI6MTY3MTQ3NDA1OX0.nHcKs385f_KQKUDVv0fT5jffMQUVJSmbPXU_ABj9y6o
+
+###
+
+GET http://localhost:3000/cards
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk1ZmFlNDkwY2RiMGRlMWM4ODZjM2QiLCJpYXQiOjE2NzA4NjkyNTksImV4cCI6MTY3MTQ3NDA1OX0.nHcKs385f_KQKUDVv0fT5jffMQUVJSmbPXU_ABj9y6o
+
 ###

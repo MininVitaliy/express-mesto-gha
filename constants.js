@@ -21,6 +21,7 @@ const infoError = {
 const SUCCESS = 200;
 const CREATED = 201;
 const ERROR_CODE = 400;
+const UNAUTHORIZED = 401;
 const ERROR_NOT_FOUND = 404;
 const ERROR_SERVER = 500;
 
@@ -31,4 +32,5 @@ module.exports = {
   ERROR_SERVER,
   SUCCESS,
   CREATED,
+  UNAUTHORIZED,
 };
