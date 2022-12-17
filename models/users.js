@@ -27,7 +27,10 @@ const userSchema = new mogoose.Schema({
     type: String,
     required: true,
     unique: true,
-    validate: [ isEmail, 'invalid email']
+    validate: {
+      validator: (value) => isEmail(value),
+      message: 'Некорректный email',
+    },
   },
   password: {
     type: String,
