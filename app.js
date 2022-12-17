@@ -9,6 +9,7 @@ const {
 } = require('./controllers/users');
 const { auth }= require('./middlewares/auth');
 const { celebrate, Joi, errors} = require('celebrate');
+const validator = require('validator');
 
 const PORT = 3000;
 
