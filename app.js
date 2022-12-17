@@ -8,14 +8,43 @@ const {
   login,
 } = require('./controllers/users');
 const { auth }= require('./middlewares/auth');
+const { celebrate, Joi, errors} = require('celebrate');
 
 const PORT = 3000;
 
 const app = express();
 
 app.use(express.json());
-app.post('/signin', login);
-app.post('/signup', createUser);;
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().custom((value, helpers) => {
+      if (validator.isEmail(value)) {
+        return value;
+      }
+      return helpers.message('Некорректный email');
+    }),
+    password: Joi.string().required(),
+  }),
+}), login);
+app.post('/signup', celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    email: Joi.string().required().custom((value, helpers) => {
+      if (validator.isEmail(value)) {
+        return value;
+      }
+      return helpers.message('Некорректный email');
+    }),
+    password: Joi.string().required(),
+    avatar: Joi.string().custom((value, helpers) => {
+      if (AVATAR_REGEX.test(value)) {
+        return value;
+      }
+      return helpers.message('Некорректная ссылка');
+    }),
+  }),
+}), createUser);
 app.use('/users', auth, routerUser);
 app.use('/cards', auth, routerCard);
 app.use('*', (req, res) => res.status(UNAUTHORIZED).json({ message: infoError.general.nonExistentPage }));
@@ -33,6 +62,7 @@ app.use('*', (req, res) => res.status(UNAUTHORIZED).json({ message: infoError.ge
     next(err)
   }
 });*/
+app.use(errors());
 app.use((err, req, res, next) => {
   if (err.name === 'ValidationError') {
     res.status(ERROR_CODE).json({ message: 'Переданы некорректные данные в методы создания карточки' });
