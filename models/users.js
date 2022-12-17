@@ -1,7 +1,8 @@
 const mogoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const { AuthError } = require('../middlewares/authError')
+const { AuthError } = require('../middlewares/authError');
+const isEmail = require('validator/lib/isEmail');
 
 const userSchema = new mogoose.Schema({
   name: {
@@ -29,7 +30,7 @@ const userSchema = new mogoose.Schema({
     required: true,
     unique: true,
     validate: {
-      validator: (value) => validator.isEmail(value),
+      validator: (value) => isEmail(value),
       message: 'Некорректный email',
     },
   },
