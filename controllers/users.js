@@ -60,11 +60,11 @@ const createUser = (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
-    const user = await userNew.findById(_id);
+    const user = await userNew.findById(_id).
     //const { name, about, avatar } = user;
-    if (user === null) {
-      return  new NotFoundError('Пользователь не найден');
-    }
+   // if (user === null) {return    }
+    orFail(new NotFoundError('Пользователь не найден'));
+
     //return  res.status(SUCCESS).json({ name, about, avatar });
     return  res.status(SUCCESS).json({ user });
   } catch (e) {
