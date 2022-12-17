@@ -48,7 +48,7 @@ app.post('/signup', celebrate({
 }), createUser);
 app.use('/users', auth, routerUser);
 app.use('/cards', auth, routerCard);
-app.use('*', (req, res) => res.status(UNAUTHORIZED).json({ message: infoError.general.nonExistentPage }));
+app.use('*', (req, res, next) => next (res.status(UNAUTHORIZED).json({ message: infoError.general.nonExistentPage })));
 //app.use((err, req, res, next) => {
   //res.status(err.statusCode).send({ message: err.message });
   //res.status(ERROR_CODE).send({ message: err });
