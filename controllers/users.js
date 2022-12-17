@@ -138,7 +138,7 @@ const login = (req, res, next) => {
         { expiresIn: '7d'},
       );*/
       const token = createToken({ _id: user._id });
-      res.status(201).send({ token });
+      res.status(200).send({ token });
     })
     .catch((e) => {
       const err = new Error('Необходима авторизация');
