@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const routerCard = require('./routes/cards');
 const routerUser = require('./routes/users');
-const { infoError, UNAUTHORIZED, ERROR_CODE, ERROR_SERVER} = require('./constants');
+const { infoError, UNAUTHORIZED, ERROR_CODE, ERROR_SERVER, ERROR_NOT_FOUND} = require('./constants');
 const {
   createUser,
   login,
@@ -48,7 +48,7 @@ app.post('/signup', celebrate({
 }), createUser);
 app.use('/users', auth, routerUser);
 app.use('/cards', auth, routerCard);
-app.use('*', (req, res, next) => next (res.status(UNAUTHORIZED).json({ message: infoError.general.nonExistentPage })));
+app.use('*', (req, res, next) => next (res.status(ERROR_NOT_FOUND).json({ message: infoError.general.nonExistentPage })));
 //app.use((err, req, res, next) => {
   //res.status(err.statusCode).send({ message: err.message });
   //res.status(ERROR_CODE).send({ message: err });
