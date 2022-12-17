@@ -62,9 +62,9 @@ const getUser = async (req, res, next) => {
     const user = await userNew.findById(_id);
     const { name, about, avatar } = user;
     if (user === null) {
-      throw res.status(ERROR_NOT_FOUND).json({ message: 'Пользователь не найден' });
+      return  res.status(ERROR_NOT_FOUND).json({ message: 'Пользователь не найден' });
     }
-    throw res.status(SUCCESS).json({ name, about, avatar });
+    return  res.status(SUCCESS).json({ name, about, avatar });
   } catch (e) {
     /*if (e.name === 'CastError') {
       return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
