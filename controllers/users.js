@@ -9,6 +9,7 @@ const {
 } = require('../constants');
 const bcrypt = require('bcryptjs');
 //const jwt = require('jsonwebtoken');
+const { NotFoundError } = require('../middlewares/authError');
 
 const { createToken } = require('../middlewares/auth')
 
@@ -62,7 +63,7 @@ const getUser = async (req, res, next) => {
     const user = await userNew.findById(_id);
     const { name, about, avatar } = user;
     if (user === null) {
-      return  res.status(ERROR_NOT_FOUND).json({ message: 'Пользователь не найден' });
+      throw new NotFoundError('Пользователь не найден');
     }
     return  res.status(SUCCESS).json({ name, about, avatar });
   } catch (e) {
