@@ -60,10 +60,11 @@ const getUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
     const user = await userNew.findById(_id);
+    const { name, about, avatar } = user;
     if (user === null) {
-      return res.status(ERROR_NOT_FOUND).json({ message: infoError.users.userNo });
+      throw res.status(ERROR_NOT_FOUND).json({ message: infoError.users.userNo });
     }
-    return res.status(SUCCESS).json({ user });
+    throw res.status(SUCCESS).json({ name, about, avatar });
   } catch (e) {
     /*if (e.name === 'CastError') {
       return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
