@@ -27,7 +27,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "DASDAS" ,
+  "name": "DASDAS!!!!!" ,
   "link": "https://ic.pics.livejournal.com/bav_eot/44066703/942996/942996_original.jpg"
 }
 
@@ -38,8 +38,8 @@ Accept: application/json
 
 ###
 
-DELETE http://localhost:3000/cards/639dd4e68ec0713c4485f433
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk1ZmFlNDkwY2RiMGRlMWM4ODZjM2QiLCJpYXQiOjE2NzA4NjkyNTksImV4cCI6MTY3MTQ3NDA1OX0.nHcKs385f_KQKUDVv0fT5jffMQUVJSmbPXU_ABj9y6o
+DELETE http://localhost:3000/cards/639e07bb6b6ebf620b46f101
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzlkZDQ5NzhlYzA3MTNjNDQ4NWY0MzAiLCJpYXQiOjE2NzEyODc5OTQsImV4cCI6MTY3MTg5Mjc5NH0.B93VNkxWJuthkOrX16PuWDVkw6Nwfy9KzcMXwcgAvIk
 //Accept: application/json
 
 

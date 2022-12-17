@@ -7,6 +7,7 @@ const {
   SUCCESS,
   CREATED,
   UNAUTHORIZED,
+  FORBIDDEN,
 } = require('../constants');
 //const { userNew } = require('../models/users');
 
@@ -36,15 +37,17 @@ const getCards = async (req, res, next) => {
 const deleteCard = async (req, res, next) => {
   try {
     const { cardId } = req.params;
+    console.log(cardId)
     const cardInfo = await cardNew.findById(cardId);
+    console.log(req.user._id)
+    if (cardInfo === null) {
+      return res.status(ERROR_NOT_FOUND).json({message: 'Карточка не найдена'});
+    }
     if (cardInfo.owner.toString() === req.user._id ) {
       const card = await cardNew.findByIdAndRemove(cardId);
-      if (card === null) {
-        return res.status(ERROR_NOT_FOUND).json({message: 'Карточка не найдена'});
-      }
       return res.status(SUCCESS).json({message: 'Карточка удалена'});
     } else {
-      return res.status(UNAUTHORIZED).json({message: "Карточку нельзя удалять данным пользователем"});
+      return res.status(FORBIDDEN).json({message: "Карточку нельзя удалять данным пользователем"});
     }
   } catch (e) {
     next(e)
