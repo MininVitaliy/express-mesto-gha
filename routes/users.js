@@ -6,7 +6,7 @@ const {
   updateProfile,
   updateAvatar,
 } = require('../controllers/users');
-const { celebrate, Joi} = require('celebrate')
+const { celebrate, Joi } = require('celebrate')
 
 routerUser.get('/', celebrate({
   params: Joi.object().keys({
@@ -16,9 +16,9 @@ routerUser.get('/', celebrate({
 //routerUser.post('/', createUser);
 //routerUser.get('/:userId', getUser);
 routerUser.get('/me', celebrate({
-  params: Joi.object().keys({
+  /*params: Joi.object().keys({
     userId: Joi.string().length(24).hex(),
-  }),
+  }),*/
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
