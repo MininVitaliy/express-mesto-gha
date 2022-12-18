@@ -1,10 +1,10 @@
-const {celebrate, Joi} = require("celebrate");
+const { celebrate, Joi } = require("celebrate");
 const validator = require("validator");
 const { login, createUser } = require("../controllers/users");
-const {auth} = require("../middlewares/auth");
+const { auth } = require("../middlewares/auth");
 const routerUser = require("./users");
 const routerCard = require("./cards");
-const {ERROR_NOT_FOUND, infoError} = require("../constants");
+const { ERROR_NOT_FOUND } = require("../constants");
 const express = require("express");
 const app = express();
 
@@ -40,6 +40,6 @@ app.post('/signup', celebrate({
 }), createUser);
 app.use('/users', auth, routerUser);
 app.use('/cards', auth, routerCard);
-app.use('*', (req, res, next) => next (res.status(ERROR_NOT_FOUND).json({ message: infoError.general.nonExistentPage })));
+app.use('*', (req, res, next) => next (res.status(ERROR_NOT_FOUND).json({ message: 'Нет такой стараницы приложения' })));
 
 module.exports = app;

@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const routerCard = require('./routes/cards');
+/*const routerCard = require('./routes/cards');
 const routerUser = require('./routes/users');
 const {
   infoError,
@@ -13,8 +13,8 @@ const {
   login,
 } = require('./controllers/users');
 const { auth }= require('./middlewares/auth');
-const { celebrate, Joi, errors} = require('celebrate');
-const validator = require('validator');
+const validator = require('validator');*/
+const { errors} = require('celebrate');
 const { Error } = require('./middlewares/authError');
 const routes = require('./routes/routes');
 
