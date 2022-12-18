@@ -16,9 +16,9 @@ routerUser.get('/', /*celebrate({
 //routerUser.post('/', createUser);
 //routerUser.get('/:userId', getUser);
 routerUser.get('/me', celebrate({
-  user: Joi.object().keys({
+  /*user: Joi.object().keys({
     _id: Joi.string().length(24).hex(),
-  }),
+  }),*/
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
