@@ -112,7 +112,9 @@ const login = (req, res, next) => {
       res.status(SUCCESS).send({ token });
     })
     .catch((e) => {
-      next(e);
+      const err = new Error('Необходима авторизация');
+      err.statusCode = 401;
+      next(err);
     });
 };
 

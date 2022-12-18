@@ -1,6 +1,7 @@
 const { UNAUTHORIZED, ERROR_CODE, CONFLICT, ERROR_SERVER } = require('../constants');
 
 function Error (err, res) {
+  console.log(err.statusCode)
   if (err.name === 'ValidationError') {
     res.status(ERROR_CODE).json({ message: 'Переданы некорректные данные в методы создания карточки' });
   } else if (err.name === 'CastError'){
