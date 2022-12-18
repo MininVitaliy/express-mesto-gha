@@ -40,7 +40,7 @@ const userSchema = new mogoose.Schema({
   },
 });
 
-userSchema.statics.findUserByCredentials = (email, password) => {
+userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
