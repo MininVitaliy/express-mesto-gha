@@ -16,14 +16,14 @@ function createToken (payload) {
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    return  res.status(UNAUTHORIZED).send({ message: 'Неправильные почта или пароль' });
+    return  res.status(401).send({ message: 'Неправильные почта или пароль' });
   }
   const token = authorization.replace('Bearer ', '');
   let payload;
   try {
     payload = jwt.verify(token, secret_key);
   } catch (err) {
-    return res.status(UNAUTHORIZED).send({ message: 'Неправильные почта или пароль' });
+    return res.status(401).send({ message: 'Неправильные почта или пароль' });
   }
   req.user = payload;
   next();

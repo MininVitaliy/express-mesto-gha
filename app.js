@@ -56,7 +56,6 @@ app.use('/cards', auth, routerCard);
 app.use('*', (req, res, next) => next (res.status(ERROR_NOT_FOUND).json({ message: infoError.general.nonExistentPage })));
 app.use(errors());
 app.use((err, req, res, next) => {
-  //Error(err);
   if (err.name === 'ValidationError') {
     res.status(ERROR_CODE).json({ message: 'Переданы некорректные данные в методы создания карточки' });
   } else if (err.name === 'CastError'){
