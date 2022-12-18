@@ -4,9 +4,10 @@ const routerCard = require('./routes/cards');
 const routerUser = require('./routes/users');
 const {
   infoError,
-  UNAUTHORIZED,
   ERROR_CODE,
   ERROR_SERVER,
+  UNAUTHORIZED,
+  CONFLICT,
   ERROR_NOT_FOUND} = require('./constants');
 const {
   createUser,
@@ -15,14 +16,13 @@ const {
 const { auth }= require('./middlewares/auth');
 const { celebrate, Joi, errors} = require('celebrate');
 const validator = require('validator');
-const routes = require('./routes/routes')
 
 const PORT = 3000;
 
 const app = express();
 
 app.use(express.json());
-/*app.post('/signin', celebrate({
+app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().custom((value, helpers) => {
       if (validator.isEmail(value)) {
@@ -55,31 +55,16 @@ app.post('/signup', celebrate({
 app.use('/users', auth, routerUser);
 app.use('/cards', auth, routerCard);
 app.use('*', (req, res, next) => next (res.status(ERROR_NOT_FOUND).json({ message: infoError.general.nonExistentPage })));
-//app.use((err, req, res, next) => {
-  //res.status(err.statusCode).send({ message: err.message });
-  //res.status(ERROR_CODE).send({ message: err });
-  //res.send({ message: err.message });
-
-//});
-
-/*app.use((err, req, res, next) => {
-  if (err.name === 'ValidationError') {
-    res.status(ERROR_CODE).json({ message: infoError.cards.createCard });
-  } else {
-    next(err)
-  }
-});*/
-app.use(routes);
 app.use(errors());
 app.use((err, req, res, next) => {
   if (err.name === 'ValidationError') {
     res.status(ERROR_CODE).json({ message: 'Переданы некорректные данные в методы создания карточки' });
   } else if (err.name === 'CastError'){
     res.status(ERROR_CODE).json({ message: 'Переданы некорректные данные iD' });
-  } else if (err.statusCode === 401) {
+  } else if (err.statusCode === UNAUTHORIZED) {
     res.status(err.statusCode).json({ message: 'Необходима авторизация' });
   } else if (err.name === 'MongoError' || err.code === 11000) {
-    res.status(409).json({ message: 'Указанный email уже занят' });
+    res.status(CONFLICT).json({ message: 'Указанный email уже занят' });
   } else {
     res.status(ERROR_SERVER).json({ message: 'Произошла ошибка' });
   }

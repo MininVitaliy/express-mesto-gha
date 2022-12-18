@@ -24,6 +24,7 @@ const ERROR_CODE = 400;
 const UNAUTHORIZED = 401;
 const FORBIDDEN = 403;
 const ERROR_NOT_FOUND = 404;
+const CONFLICT = 409;
 const ERROR_SERVER = 500;
 
 module.exports = {
