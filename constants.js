@@ -36,4 +36,5 @@ module.exports = {
   CREATED,
   UNAUTHORIZED,
   FORBIDDEN,
+  CONFLICT,
 };

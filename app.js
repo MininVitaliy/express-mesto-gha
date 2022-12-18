@@ -64,7 +64,7 @@ app.use((err, req, res, next) => {
   } else if (err.statusCode === 401) {
     res.status(err.statusCode).json({ message: 'Необходима авторизация' });
   } else if (err.name === 'MongoError' || err.code === 11000) {
-    res.status(409).json({ message: 'Указанный email уже занят' });
+    res.status(CONFLICT).json({ message: 'Указанный email уже занят' });
   } else {
     res.status(ERROR_SERVER).json({ message: 'Произошла ошибка' });
   }
