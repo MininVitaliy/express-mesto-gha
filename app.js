@@ -15,7 +15,6 @@ const {
 const { auth }= require('./middlewares/auth');
 const { celebrate, Joi, errors} = require('celebrate');
 const validator = require('validator');
-const { Error } = require('./middlewares/error')
 
 const PORT = 3000;
 
