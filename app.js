@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(routes);
 app.use(errors());
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   Error(err, res);
 });
 
