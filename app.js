@@ -15,14 +15,16 @@ const {
 const { auth }= require('./middlewares/auth');
 const { celebrate, Joi, errors} = require('celebrate');
 const validator = require('validator');
-const { Error } = require('./middlewares/authError')
+const { Error } = require('./middlewares/authError');
+const routes = require('./routes/routes');
+
 
 const PORT = 3000;
 
 const app = express();
 
 app.use(express.json());
-app.post('/signin', celebrate({
+/*app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().custom((value, helpers) => {
       if (validator.isEmail(value)) {
@@ -54,7 +56,8 @@ app.post('/signup', celebrate({
 }), createUser);
 app.use('/users', auth, routerUser);
 app.use('/cards', auth, routerCard);
-app.use('*', (req, res, next) => next (res.status(ERROR_NOT_FOUND).json({ message: infoError.general.nonExistentPage })));
+app.use('*', (req, res, next) => next (res.status(ERROR_NOT_FOUND).json({ message: infoError.general.nonExistentPage })));*/
+app.use(routes);
 app.use(errors());
 app.use((err, req, res, next) => {
   /*if (err.name === 'ValidationError') {
