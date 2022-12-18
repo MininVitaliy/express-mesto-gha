@@ -119,7 +119,7 @@ const login = (req, res, next) => {
   return  userNew.findUserByCredentials(email, password)
     .then((user) => {
       const token = createToken({ _id: user._id });
-      res.status(200).send({ token });
+      res.status(SUCCESS).send({ token });
     })
     .catch((e) => {
       next(e);
