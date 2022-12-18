@@ -129,7 +129,7 @@ const login = (req, res, next) => {
     .catch((e) => {
       //const err = new Error('Необходима авторизация');
       //err.statusCode = 401;
-      next(err);
+      next(e);
     });
 };
 
