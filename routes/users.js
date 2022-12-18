@@ -10,12 +10,13 @@ const {
 const { celebrate, Joi } = require('celebrate')
 
 routerUser.get('/', getUsers);
+routerUser.get('/me', getUser);
 routerUser.get('/:userId', celebrate({
   params: Joi.object().keys({
-    postId: Joi.string().alphanum().length(24),
+    userId: Joi.string().alphanum().length(24),
   }),
 }), getUserId);
-routerUser.get('/me', getUser);
+
 routerUser.patch('/me', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),

@@ -46,13 +46,6 @@ const createUser = (req, res, next) => {
       email,
     }))
     .catch((err) => {
-      /*if (err.name === 'ValidationError') {
-        res.status(ERROR_CODE).json({ message: infoError.users.createUser });
-        return;
-      }
-      if (err.name === 'MongoError' || err.code === 11000) {
-        res.status(409).json({ message: 'Указанный email уже занят' });
-      } else res.status(ERROR_SERVER).json({ message: infoError.general.error });*/
       next(err)
     });
 };
@@ -60,12 +53,14 @@ const createUser = (req, res, next) => {
 const getUserId = async (req, res, next) => {
   try {
     const { userId } = req.params;
+    console.log(userId)
     const user = await userNew.findById(userId);
-    const { name, about, avatar} = user
+    //const { name, about, avatar} = user;
     if (user === null) {
       return res.status(404).json({message: 'Пользователь не найден'});
+      //return new NotFoundError('Пользователь не найден!');
     }
-    return res.status(200).json({ name, about, avatar});
+    return res.status(200).json({ user });
   } catch (err) {
     next(err)
   }
@@ -73,25 +68,16 @@ const getUserId = async (req, res, next) => {
 
 
 
-
-
-
-
-
-
-
 const getUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
-    console.log(req)
+    console.log(req.user)
     const user = await userNew.findById(_id)
-    //const { name, about, avatar } = user;
     if (user === null) {
-       return res.status(404).json({message: 'Пользователь не найден'});
-       //return res.status(SUCCESS).json({ name, about, avatar });
+      return new NotFoundError('Пользователь не найден')
+      //res.status(404).json({message: 'Пользователь не найден'});
     }
     //orFail(new NotFoundError('Пользователь не найден'));
-
     //return  res.status(SUCCESS).json({ name, about, avatar });
     return  res.status(SUCCESS).json({ user });
   } catch (e) {
