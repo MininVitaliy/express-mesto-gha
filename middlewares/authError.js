@@ -5,10 +5,10 @@ const {
   ERROR_SERVER,
 } = require('../constants');
 
-function Error (err, res) {
+function Error(err, res) {
   if (err.name === 'ValidationError') {
     res.status(ERROR_CODE).json({ message: 'Переданы некорректные данные в методы создания карточки' });
-  } else if (err.name === 'CastError'){
+  } else if (err.name === 'CastError') {
     res.status(ERROR_CODE).json({ message: 'Переданы некорректные данные iD' });
   } else if (err.statusCode === 401) {
     res.status(err.statusCode).json({ message: err.message });
@@ -17,14 +17,14 @@ function Error (err, res) {
   } else {
     res.status(ERROR_SERVER).json({ message: 'Произошла ошибка' });
   }
-};
+}
 
 class AuthError extends Error {
   constructor(message) {
     super(message);
     this.statusCode = UNAUTHORIZED;
   }
-};
+}
 
 module.exports = {
   AuthError,
