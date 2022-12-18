@@ -1,6 +1,6 @@
-const { UNAUTHORIZED } = require('../constants');
+const { UNAUTHORIZED, ERROR_CODE, CONFLICT, ERROR_SERVER } = require('../constants');
 
-/*const Error = (err) => {
+function Error (err) {
   if (err.name === 'ValidationError') {
     res.status(ERROR_CODE).json({ message: 'Переданы некорректные данные в методы создания карточки' });
   } else if (err.name === 'CastError'){
@@ -12,20 +12,16 @@ const { UNAUTHORIZED } = require('../constants');
   } else {
     res.status(ERROR_SERVER).json({ message: 'Произошла ошибка' });
   }
-}
-
-module.exports = {
-  Error,
-}*/
-
+};
 
 class AuthError extends Error {
   constructor(message) {
     super(message);
     this.statusCode = UNAUTHORIZED;
   }
-}
+};
 
 module.exports = {
   AuthError,
+  Error,
 };
