@@ -116,7 +116,6 @@ const updateAvatar = async (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password)
   return  userNew.findUserByCredentials(email, password)
     .then((user) => {
       /*const token = jwt.sign(
@@ -128,8 +127,8 @@ const login = (req, res, next) => {
       res.status(200).send({ token });
     })
     .catch((e) => {
-      const err = new Error('Необходима авторизация');
-      err.statusCode = 401;
+      //const err = new Error('Необходима авторизация');
+      //err.statusCode = 401;
       next(err);
     });
 };
