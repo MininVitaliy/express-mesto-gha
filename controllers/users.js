@@ -60,7 +60,7 @@ const createUser = (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
-    console.log(_id)
+    console.log(req.user)
     const user = await userNew.findById(_id)
     //const { name, about, avatar } = user;
      if (user === null) {
