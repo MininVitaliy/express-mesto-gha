@@ -18,7 +18,6 @@ const getUsers = async (req, res, next) => {
     const users = await userNew.find({});
     return res.status(SUCCESS).json(users);
   } catch (e) {
-    //return res.status(ERROR_SERVER).json({ message: infoError.general.error });
     next(e)
   }
 };
@@ -55,18 +54,14 @@ const getUserId = async (req, res, next) => {
     const { userId } = req.params;
     console.log(userId)
     const user = await userNew.findById(userId);
-    //const { name, about, avatar} = user;
     if (user === null) {
       return res.status(404).json({message: 'Пользователь не найден'});
-      //return new NotFoundError('Пользователь не найден!');
     }
     return res.status(200).json({ user });
   } catch (err) {
     next(err)
   }
 }
-
-
 
 const getUser = async (req, res, next) => {
   try {
@@ -75,17 +70,9 @@ const getUser = async (req, res, next) => {
     const user = await userNew.findById(_id)
     if (user === null) {
       return new NotFoundError('Пользователь не найден')
-      //res.status(404).json({message: 'Пользователь не найден'});
     }
-    //orFail(new NotFoundError('Пользователь не найден'));
-    //return  res.status(SUCCESS).json({ name, about, avatar });
     return  res.status(SUCCESS).json({ user });
   } catch (e) {
-    /*if (e.name === 'CastError') {
-      return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
-    }
-    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
-    */
     next(e);
   }
 };
@@ -107,14 +94,6 @@ const updateProfile = async (req, res, next) => {
   } catch (e) {
     next(e)
   }
-    /*if (e.name === 'CastError') {
-      return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
-    }
-    if (e.name === 'ValidationError') {
-      return res.status(ERROR_CODE).json({ message: infoError.users.userUpdate });
-    }
-    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
-  }*/
 };
 
 const updateAvatar = async (req, res, next) => {
@@ -133,14 +112,6 @@ const updateAvatar = async (req, res, next) => {
   } catch (e) {
     next(e)
   }
-    /*if (e.name === 'CastError') {
-      return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
-    }
-    if (e.name === 'ValidationError') {
-      return res.status(ERROR_CODE).json({ message: infoError.users.userUpdateAvatar });
-    }
-    return res.status(ERROR_SERVER).json({ message: infoError.general.error });
-  }*/
 };
 
 const login = (req, res, next) => {

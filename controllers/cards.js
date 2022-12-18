@@ -9,7 +9,6 @@ const {
   UNAUTHORIZED,
   FORBIDDEN,
 } = require('../constants');
-//const { userNew } = require('../models/users');
 
 const createCard = async (req, res, next) => {
   try {
@@ -30,7 +29,6 @@ const getCards = async (req, res, next) => {
     return res.status(SUCCESS).json(cards);
   } catch (e) {
     next(e)
-    //return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 
@@ -51,10 +49,6 @@ const deleteCard = async (req, res, next) => {
     }
   } catch (e) {
     next(e)
-    //if (e.name === 'CastError') {
-      //return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
-    //}
-    //return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 
@@ -73,10 +67,6 @@ const likeCard = async (req, res, next) => {
     return res.status(SUCCESS).json(changeLikeCard);
   } catch (e) {
     next(e)
-    //if (e.name === 'CastError') {
-      //return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
-    //}
-    //return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 
@@ -98,10 +88,6 @@ const dislikeCard = async (req, res, next) => {
     return res.status(SUCCESS).json(changeLikeCard);
   } catch (e) {
     next(e)
-    //if (e.name === 'CastError') {
-      //return res.status(ERROR_CODE).json({ message: infoError.general.cardIdUncorrected });
-    //}
-    //return res.status(ERROR_SERVER).json({ message: infoError.general.error });
   }
 };
 

@@ -4,7 +4,7 @@ Accept: application/json
 
 
 ###
-GET http://localhost:3000/users/639b6facdaeee4157f217109
+GET http://localhost:3000/users/639b6facdaeee4157f217105
 //Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk3N2VlZjRkMTU1OWQxMzdjZWI4MmQiLCJpYXQiOjE2NzA4NzI4NDIsImV4cCI6MTY3MTQ3NzY0Mn0.8bbWIytTSZufcXKqfr9YfS-vR3iXH9uipzJAS6eYxF8
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk1ZmFlNDkwY2RiMGRlMWM4ODZjM2QiLCJpYXQiOjE2NzA4NjkyNTksImV4cCI6MTY3MTQ3NDA1OX0.nHcKs385f_KQKUDVv0fT5jffMQUVJSmbPXU_ABj9y6o
 
