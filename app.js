@@ -6,7 +6,6 @@ const {
   infoError,
   ERROR_CODE,
   ERROR_SERVER,
-  UNAUTHORIZED,
   CONFLICT,
   ERROR_NOT_FOUND} = require('./constants');
 const {
