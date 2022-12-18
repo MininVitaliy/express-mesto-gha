@@ -4,8 +4,8 @@ Accept: application/json
 
 
 ###
-GET http://localhost:3000/users/639582cb4a666806c9940dc6
-Accept: application/json
+GET http://localhost:3000/users/639b6facdaeee4157f217105
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mzk3N2VlZjRkMTU1OWQxMzdjZWI4MmQiLCJpYXQiOjE2NzA4NzI4NDIsImV4cCI6MTY3MTQ3NzY0Mn0.8bbWIytTSZufcXKqfr9YfS-vR3iXH9uipzJAS6eYxF8
 
 ###
 

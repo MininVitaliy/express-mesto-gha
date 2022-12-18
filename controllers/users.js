@@ -61,10 +61,11 @@ const getUserId = async (req, res, next) => {
   try {
     const { userId } = req.params;
     const user = await userNew.findById(userId);
+    const { name, about, avatar} = user
     if (user === null) {
       return res.status(404).json({message: 'Пользователь не найден'});
     }
-    return res.status(200).json(user);
+    return res.status(200).json({ name, about, avatar});
   } catch (err) {
     next(err)
   }
@@ -85,10 +86,10 @@ const getUser = async (req, res, next) => {
     console.log(req)
     const user = await userNew.findById(_id)
     //const { name, about, avatar } = user;
-    /* if (user === null) {
+    if (user === null) {
        return res.status(404).json({message: 'Пользователь не найден'});
        //return res.status(SUCCESS).json({ name, about, avatar });
-     }*/
+    }
     //orFail(new NotFoundError('Пользователь не найден'));
 
     //return  res.status(SUCCESS).json({ name, about, avatar });
