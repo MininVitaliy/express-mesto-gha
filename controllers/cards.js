@@ -15,7 +15,7 @@ const createCard = async (req, res, next) => {
     });
     return res.status(CREATED).json(cardUpdate);
   } catch (e) {
-    return next(e)
+    return next(e);
   }
 };
 
@@ -24,7 +24,7 @@ const getCards = async (req, res, next) => {
     const cards = await cardNew.find({}).populate(['owner', 'likes']);
     return res.status(SUCCESS).json(cards);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
@@ -33,16 +33,15 @@ const deleteCard = async (req, res, next) => {
     const { cardId } = req.params;
     const cardInfo = await cardNew.findById(cardId);
     if (cardInfo === null) {
-      return res.status(ERROR_NOT_FOUND).json({message: 'Карточка не найдена'});
+      return res.status(ERROR_NOT_FOUND).json({ message: 'Карточка не найдена' });
     }
-    if (cardInfo.owner.toString() === req.user._id ) {
-      const card = await cardNew.findByIdAndRemove(cardId);
-      return res.status(SUCCESS).json({message: 'Карточка удалена'});
-    } else {
-      return res.status(FORBIDDEN).json({message: "Карточку нельзя удалять данным пользователем"});
+    if (cardInfo.owner.toString() === req.user._id) {
+      await cardNew.findByIdAndRemove(cardId);
+      return res.status(SUCCESS).json({ message: 'Карточка удалена' });
     }
+    return res.status(FORBIDDEN).json({ message: 'Карточку нельзя удалять данным пользователем' });
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
@@ -56,11 +55,11 @@ const likeCard = async (req, res, next) => {
       { new: true },
     ).populate(['owner', 'likes']);
     if (changeLikeCard === null) {
-      return res.status(ERROR_NOT_FOUND).json({ message:'Карточка не найдена' });
+      return res.status(ERROR_NOT_FOUND).json({ message: 'Карточка не найдена' });
     }
     return res.status(SUCCESS).json(changeLikeCard);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
@@ -77,11 +76,11 @@ const dislikeCard = async (req, res, next) => {
       { new: true },
     ).populate(['owner', 'likes']);
     if (changeLikeCard === null) {
-      return  res.status(ERROR_NOT_FOUND).json({ message: 'Передан несуществующий _id карточки' });
+      return res.status(ERROR_NOT_FOUND).json({ message: 'Передан несуществующий _id карточки' });
     }
     return res.status(SUCCESS).json(changeLikeCard);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 

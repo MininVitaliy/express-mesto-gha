@@ -2,7 +2,7 @@ const {
   UNAUTHORIZED,
   ERROR_CODE,
   CONFLICT,
-  ERROR_SERVER
+  ERROR_SERVER,
 } = require('../constants');
 
 function Error (err, res) {

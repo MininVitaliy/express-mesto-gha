@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const { userNew } = require('../models/users');
 const {
   infoError,
@@ -5,7 +6,6 @@ const {
   SUCCESS,
   CREATED,
 } = require('../constants');
-const bcrypt = require('bcryptjs');
 const { createToken } = require('../middlewares/auth');
 
 const getUsers = async (req, res, next) => {
@@ -13,7 +13,7 @@ const getUsers = async (req, res, next) => {
     const users = await userNew.find({});
     return res.status(SUCCESS).json(users);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
@@ -49,21 +49,21 @@ const getUserId = async (req, res, next) => {
     const { userId } = req.params;
     const user = await userNew.findById(userId);
     if (user === null) {
-      return res.status(ERROR_NOT_FOUND).json({message: 'Пользователь не найден'});
+      return res.status(ERROR_NOT_FOUND).json({ message: 'Пользователь не найден' });
     }
     return res.status(SUCCESS).json({ user });
   } catch (err) {
-    next(err);
+    return next(err);
   }
-}
+};
 
 const getUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
     const user = await userNew.findById(_id);
-    return  res.status(SUCCESS).json({ user });
+    return res.status(SUCCESS).json({ user });
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
@@ -82,7 +82,7 @@ const updateProfile = async (req, res, next) => {
     }
     return res.status(SUCCESS).json({ changeProfile });
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
@@ -100,18 +100,18 @@ const updateAvatar = async (req, res, next) => {
     }
     return res.status(SUCCESS).json(changeProfile);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
-  return  userNew.findUserByCredentials(email, password)
+  return userNew.findUserByCredentials(email, password)
     .then((user) => {
       const token = createToken({ _id: user._id });
       res.status(SUCCESS).send({ token });
     })
-    .catch((e) => {
+    .catch(() => {
       const err = new Error('Необходима авторизация');
       err.statusCode = 401;
       next(err);
