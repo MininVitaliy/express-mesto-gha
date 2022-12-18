@@ -57,8 +57,8 @@ app.use('/cards', auth, routerCard);
 app.use('*', (req, res, next) => next (res.status(ERROR_NOT_FOUND).json({ message: infoError.general.nonExistentPage })));
 app.use(errors());
 app.use((err, req, res, next) => {
-  Error(err);
-  /*if (err.name === 'ValidationError') {
+  //Error(err);
+  if (err.name === 'ValidationError') {
     res.status(ERROR_CODE).json({ message: 'Переданы некорректные данные в методы создания карточки' });
   } else if (err.name === 'CastError'){
     res.status(ERROR_CODE).json({ message: 'Переданы некорректные данные iD' });
@@ -68,7 +68,7 @@ app.use((err, req, res, next) => {
     res.status(CONFLICT).json({ message: 'Указанный email уже занят' });
   } else {
     res.status(ERROR_SERVER).json({ message: 'Произошла ошибка' });
-  }*/
+  }
 });
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
