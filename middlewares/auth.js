@@ -14,7 +14,7 @@ function createToken (payload) {
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    return  res.status(401).send({ message: 'Необходима авторизация' });
+    return  res.status(401).send({ message: 'Неправильные почта или пароль' });
     //throw new AuthError('Неправильные почта или пароль');
   }
   const token = authorization.replace('Bearer ', '');
@@ -22,8 +22,7 @@ const auth = (req, res, next) => {
   try {
     payload = jwt.verify(token, secret_key);
   } catch (err) {
-    return res.status(401).send({ message: 'Необходима авторизация' });
-    //throw new AuthError('Неправильные почта или пароль');
+    return res.status(401).send({ message: 'Неправильные почта или пароль' });
   }
   req.user = payload;
   next();

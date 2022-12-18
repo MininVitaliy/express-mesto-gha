@@ -55,9 +55,9 @@ const getUserId = async (req, res, next) => {
     console.log(userId)
     const user = await userNew.findById(userId);
     if (user === null) {
-      return res.status(404).json({message: 'Пользователь не найден'});
+      return res.status(ERROR_NOT_FOUND).json({message: 'Пользователь не найден'});
     }
-    return res.status(200).json({ user });
+    return res.status(SUCCESS).json({ user });
   } catch (err) {
     next(err)
   }
@@ -68,9 +68,9 @@ const getUser = async (req, res, next) => {
     const { _id } = req.user;
     console.log(req.user)
     const user = await userNew.findById(_id)
-    if (user === null) {
-      return new NotFoundError('Пользователь не найден')
-    }
+    //if (user === null) {
+      //return new NotFoundError('Пользователь не найден')
+    //}
     return  res.status(SUCCESS).json({ user });
   } catch (e) {
     next(e);
@@ -118,17 +118,10 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
   return  userNew.findUserByCredentials(email, password)
     .then((user) => {
-      /*const token = jwt.sign(
-        { _id: user._id },
-        '25a387bbe1292045e562ecbfe86f77978e6835861a1831711eb3c6b1a27ab956',
-        { expiresIn: '7d'},
-      );*/
       const token = createToken({ _id: user._id });
       res.status(200).send({ token });
     })
     .catch((e) => {
-      //const err = new Error('Необходима авторизация');
-      //err.statusCode = 401;
       next(e);
     });
 };
