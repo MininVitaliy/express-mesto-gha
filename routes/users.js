@@ -5,30 +5,17 @@ const {
   getUser,
   updateProfile,
   updateAvatar,
+  getUserId,
 } = require('../controllers/users');
 const { celebrate, Joi } = require('celebrate')
 
-routerUser.get('/', /*celebrate({
+routerUser.get('/', getUsers);
+routerUser.get('/:userId', celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().length(24).hex(),
+    postId: Joi.string().alphanum().length(24),
   }),
-}),*/ getUsers);
-//routerUser.post('/', createUser);
-//routerUser.get('/:userId', getUser);
-routerUser.get('/me', /*celebrate({
-  user: Joi.object().keys({
-    _id: Joi.string().length(24).hex(),
-  }),
-  /*body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-  }),
-}),*/ getUser);
-/*, celebrate({
-  params: Joi.object().keys({
-    userId: Joi.string().length(24).hex(),
-  }),
-})*/
+}), getUserId);
+routerUser.get('/me', getUser);
 routerUser.patch('/me', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),

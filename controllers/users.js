@@ -57,16 +57,38 @@ const createUser = (req, res, next) => {
     });
 };
 
+const getUserId = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const user = await userNew.findById(userId);
+    if (user === null) {
+      return res.status(404).json({message: 'Пользователь не найден'});
+    }
+    return res.status(200).json(user);
+  } catch (err) {
+    next(err)
+  }
+}
+
+
+
+
+
+
+
+
+
+
 const getUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
     console.log(req)
     const user = await userNew.findById(_id)
     //const { name, about, avatar } = user;
-     if (user === null) {
+    /* if (user === null) {
        return res.status(404).json({message: 'Пользователь не найден'});
        //return res.status(SUCCESS).json({ name, about, avatar });
-     }
+     }*/
     //orFail(new NotFoundError('Пользователь не найден'));
 
     //return  res.status(SUCCESS).json({ name, about, avatar });
@@ -161,4 +183,5 @@ module.exports = {
   updateProfile,
   updateAvatar,
   login,
+  getUserId,
 };
