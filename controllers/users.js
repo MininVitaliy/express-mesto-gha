@@ -6,7 +6,7 @@ const {
   CREATED,
 } = require('../constants');
 const bcrypt = require('bcryptjs');
-const { createToken } = require('../middlewares/auth')
+const { createToken } = require('../middlewares/auth');
 
 const getUsers = async (req, res, next) => {
   try {

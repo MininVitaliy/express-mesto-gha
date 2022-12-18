@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const {
   UNAUTHORIZED,
 } = require('../constants');
-
 const secret_key = "25a387bbe1292045e562ecbfe86f77978e6835861a1831711eb3c6b1a27ab956";
 
 function createToken (payload) {

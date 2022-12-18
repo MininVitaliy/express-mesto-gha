@@ -15,7 +15,7 @@ const createCard = async (req, res, next) => {
     });
     return res.status(CREATED).json(cardUpdate);
   } catch (e) {
-    next(e);
+    return next(e)
   }
 };
 

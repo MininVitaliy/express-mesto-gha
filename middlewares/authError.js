@@ -1,4 +1,9 @@
-const { UNAUTHORIZED, ERROR_CODE, CONFLICT, ERROR_SERVER } = require('../constants');
+const {
+  UNAUTHORIZED,
+  ERROR_CODE,
+  CONFLICT,
+  ERROR_SERVER
+} = require('../constants');
 
 function Error (err, res) {
   if (err.name === 'ValidationError') {

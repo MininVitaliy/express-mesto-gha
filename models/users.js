@@ -1,5 +1,4 @@
 const mogoose = require('mongoose');
-const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const { AuthError } = require('../middlewares/authError');
 const isEmail = require('validator/lib/isEmail');
@@ -62,5 +61,3 @@ const userNew = mogoose.model('user', userSchema);
 module.exports = {
   userNew,
 };
-
-//validator.isEmail('foo@bar.com');

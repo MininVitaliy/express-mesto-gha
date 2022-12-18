@@ -6,7 +6,7 @@ const {
   likeCard,
   dislikeCard,
 } = require('../controllers/cards');
-const { celebrate, Joi} = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
 
 routerCard.get('/', getCards);
 routerCard.post('/', celebrate({
@@ -18,7 +18,7 @@ routerCard.post('/', celebrate({
 routerCard.delete('/:cardId', celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().alphanum().length(24),
-  })
+  }),
 }), deleteCard);
 routerCard.put('/:cardId/likes', celebrate({
   params: Joi.object().keys({
