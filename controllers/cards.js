@@ -1,12 +1,8 @@
 const { cardNew } = require('../models/cards');
 const {
-  infoError,
-  ERROR_CODE,
-  ERROR_SERVER,
   ERROR_NOT_FOUND,
   SUCCESS,
   CREATED,
-  UNAUTHORIZED,
   FORBIDDEN,
 } = require('../constants');
 
@@ -28,16 +24,14 @@ const getCards = async (req, res, next) => {
     const cards = await cardNew.find({}).populate(['owner', 'likes']);
     return res.status(SUCCESS).json(cards);
   } catch (e) {
-    next(e)
+    next(e);
   }
 };
 
 const deleteCard = async (req, res, next) => {
   try {
     const { cardId } = req.params;
-    console.log(cardId)
     const cardInfo = await cardNew.findById(cardId);
-    console.log(req.user._id)
     if (cardInfo === null) {
       return res.status(ERROR_NOT_FOUND).json({message: 'Карточка не найдена'});
     }
@@ -48,7 +42,7 @@ const deleteCard = async (req, res, next) => {
       return res.status(FORBIDDEN).json({message: "Карточку нельзя удалять данным пользователем"});
     }
   } catch (e) {
-    next(e)
+    next(e);
   }
 };
 
@@ -66,7 +60,7 @@ const likeCard = async (req, res, next) => {
     }
     return res.status(SUCCESS).json(changeLikeCard);
   } catch (e) {
-    next(e)
+    next(e);
   }
 };
 
@@ -87,7 +81,7 @@ const dislikeCard = async (req, res, next) => {
     }
     return res.status(SUCCESS).json(changeLikeCard);
   } catch (e) {
-    next(e)
+    next(e);
   }
 };
 

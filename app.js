@@ -2,7 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const routerCard = require('./routes/cards');
 const routerUser = require('./routes/users');
-const { infoError, UNAUTHORIZED, ERROR_CODE, ERROR_SERVER, ERROR_NOT_FOUND} = require('./constants');
+const {
+  infoError,
+  UNAUTHORIZED,
+  ERROR_CODE,
+  ERROR_SERVER,
+  ERROR_NOT_FOUND} = require('./constants');
 const {
   createUser,
   login,
@@ -10,13 +15,14 @@ const {
 const { auth }= require('./middlewares/auth');
 const { celebrate, Joi, errors} = require('celebrate');
 const validator = require('validator');
+const routes = require('./routes/routes')
 
 const PORT = 3000;
 
 const app = express();
 
 app.use(express.json());
-app.post('/signin', celebrate({
+/*app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().custom((value, helpers) => {
       if (validator.isEmail(value)) {
@@ -63,6 +69,7 @@ app.use('*', (req, res, next) => next (res.status(ERROR_NOT_FOUND).json({ messag
     next(err)
   }
 });*/
+app.use(routes);
 app.use(errors());
 app.use((err, req, res, next) => {
   if (err.name === 'ValidationError') {
