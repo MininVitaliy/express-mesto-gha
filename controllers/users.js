@@ -7,6 +7,7 @@ const {
   CREATED,
 } = require('../constants');
 const { createToken } = require('../middlewares/auth');
+const NotFoundError = require("../error/ErrorNotFound");
 
 const getUsers = async (req, res, next) => {
   try {
@@ -33,11 +34,12 @@ const createUser = (req, res, next) => {
       email,
       password: hash,
     }))
-    .then(() => res.status(CREATED).json({
-      name,
-      about,
-      avatar,
-      email,
+    .then((user) => res.status(CREATED).json({
+      _id: user._id,
+      name: user.name,
+      about: user. about,
+      avatar: user.avatar,
+      email: user.email,
     }))
     .catch((err) => {
       next(err);
@@ -49,7 +51,8 @@ const getUserId = async (req, res, next) => {
     const { userId } = req.params;
     const user = await userNew.findById(userId);
     if (user === null) {
-      return res.status(ERROR_NOT_FOUND).json({ message: 'Пользователь не найден' });
+      //return res.status(ERROR_NOT_FOUND).json({ message: 'Пользователь не найден' });
+      return next(new NotFoundError('Пользователь не найден'));
     }
     return res.status(SUCCESS).json({ user });
   } catch (err) {
@@ -78,7 +81,8 @@ const updateProfile = async (req, res, next) => {
       { new: true, runValidators: true },
     );
     if (changeProfile === null) {
-      return res.status(ERROR_NOT_FOUND).json({ message: infoError.users.userNo });
+      //return res.status(ERROR_NOT_FOUND).json({ message: infoError.users.userNo });
+      return next(new NotFoundError('Пользователь не найден'));
     }
     return res.status(SUCCESS).json({ changeProfile });
   } catch (e) {
@@ -96,7 +100,8 @@ const updateAvatar = async (req, res, next) => {
       { new: true, runValidators: true },
     );
     if (changeProfile === null) {
-      return res.status(ERROR_NOT_FOUND).json({ message: infoError.users.userNo });
+      //return res.status(ERROR_NOT_FOUND).json({ message: infoError.users.userNo });
+      return next(new NotFoundError('Пользователь не найден'));
     }
     return res.status(SUCCESS).json(changeProfile);
   } catch (e) {
