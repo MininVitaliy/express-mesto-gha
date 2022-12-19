@@ -11,8 +11,11 @@ const app = express();
 app.use(express.json());
 app.use(routes);
 app.use(errors());
-app.use((err, req, res, next) => {
+/*app.use((err, req, res, next) => {
   handlerErrors(err, req);
+});*/
+app.use((err, req, res, next) => {
+  handlerErrors(err, req, res, next)
 });
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {

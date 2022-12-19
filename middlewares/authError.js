@@ -5,7 +5,7 @@ const {
   ERROR_SERVER,
 } = require('../constants');
 
-function handlerErrors(err, res) {
+function handlerErrors(err, req, res, next) {
   const { statusCode = 500, message } = err;
   if (err.code === 11000) {
    return res.status(CONFLICT).json({ message: 'Указанный email уже занят' });
