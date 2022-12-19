@@ -4,7 +4,6 @@ const express = require('express');
 const { auth } = require('../middlewares/auth');
 const routerUser = require('./users');
 const routerCard = require('./cards');
-const { ERROR_NOT_FOUND } = require('../constants');
 const { login, createUser } = require('../controllers/users');
 const NotFoundError = require("../error/ErrorNotFound");
 
@@ -44,8 +43,5 @@ app.post('/signup', celebrate({
 app.use('/users', auth, routerUser);
 app.use('/cards', auth, routerCard);
 app.use('*', (req, res, next) => next(new NotFoundError('Нет такой стараницы приложения')));
-
-
-  //next(res.status(ERROR_NOT_FOUND).json({ message: 'Нет такой стараницы приложения' })));
 
 module.exports = app;

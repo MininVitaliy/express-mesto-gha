@@ -1,8 +1,6 @@
 const bcrypt = require('bcryptjs');
 const { userNew } = require('../models/users');
 const {
-  infoError,
-  ERROR_NOT_FOUND,
   SUCCESS,
   CREATED,
 } = require('../constants');
@@ -51,7 +49,6 @@ const getUserId = async (req, res, next) => {
     const { userId } = req.params;
     const user = await userNew.findById(userId);
     if (user === null) {
-      //return res.status(ERROR_NOT_FOUND).json({ message: 'Пользователь не найден' });
       return next(new NotFoundError('Пользователь не найден'));
     }
     return res.status(SUCCESS).json({ user });
@@ -81,7 +78,6 @@ const updateProfile = async (req, res, next) => {
       { new: true, runValidators: true },
     );
     if (changeProfile === null) {
-      //return res.status(ERROR_NOT_FOUND).json({ message: infoError.users.userNo });
       return next(new NotFoundError('Пользователь не найден'));
     }
     return res.status(SUCCESS).json({ changeProfile });
@@ -100,7 +96,6 @@ const updateAvatar = async (req, res, next) => {
       { new: true, runValidators: true },
     );
     if (changeProfile === null) {
-      //return res.status(ERROR_NOT_FOUND).json({ message: infoError.users.userNo });
       return next(new NotFoundError('Пользователь не найден'));
     }
     return res.status(SUCCESS).json(changeProfile);

@@ -1,9 +1,7 @@
 const { cardNew } = require('../models/cards');
 const {
-  ERROR_NOT_FOUND,
   SUCCESS,
   CREATED,
-  FORBIDDEN,
 } = require('../constants');
 const NotFoundError = require('../error/ErrorNotFound');
 const ForbiddenError = require('../error/ForbiddenError');
@@ -35,14 +33,12 @@ const deleteCard = async (req, res, next) => {
     const { cardId } = req.params;
     const cardInfo = await cardNew.findById(cardId);
     if (cardInfo === null) {
-      //return res.status(ERROR_NOT_FOUND).json({ message: 'Карточка не найдена' });
       return next(new NotFoundError('Карточка не найдена'));
     }
     if (cardInfo.owner.toString() === req.user._id) {
       await cardNew.findByIdAndRemove(cardId);
       return res.status(SUCCESS).json({ message: 'Карточка удалена' });
     }
-    //return res.status(FORBIDDEN).json({ message: 'Карточку нельзя удалять данным пользователем' });
     return next(new ForbiddenError('Карточку нельзя удалять данным пользователем'));
   } catch (e) {
     return next(e);
@@ -59,7 +55,6 @@ const likeCard = async (req, res, next) => {
       { new: true },
     ).populate(['owner', 'likes']);
     if (changeLikeCard === null) {
-      //return res.status(ERROR_NOT_FOUND).json({ message: 'Карточка не найдена' });
       return next(new NotFoundError('Карточка не найдена'));
     }
     return res.status(SUCCESS).json(changeLikeCard);
@@ -71,7 +66,6 @@ const likeCard = async (req, res, next) => {
 const dislikeCard = async (req, res, next) => {
   try {
     if (req.user._id === null || req.user._id.length > 24) {
-      //return res.status(ERROR_NOT_FOUND).json({ message: 'Передан несуществующий _id карточки' });
       return next(new NotFoundError('Передан несуществующий _id карточки'));
     }
     const changeLikeCard = await cardNew.findByIdAndUpdate(
@@ -82,7 +76,6 @@ const dislikeCard = async (req, res, next) => {
       { new: true },
     ).populate(['owner', 'likes']);
     if (changeLikeCard === null) {
-      //return res.status(ERROR_NOT_FOUND).json({ message: 'Передан несуществующий _id карточки' });
       return next(new NotFoundError('Передан несуществующий _id карточки'));
     }
     return res.status(SUCCESS).json(changeLikeCard);
