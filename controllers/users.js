@@ -5,7 +5,7 @@ const {
   CREATED,
 } = require('../constants');
 const { createToken } = require('../middlewares/auth');
-const NotFoundError = require("../error/ErrorNotFound");
+const NotFoundError = require('../error/ErrorNotFound');
 
 const getUsers = async (req, res, next) => {
   try {
@@ -35,7 +35,7 @@ const createUser = (req, res, next) => {
     .then((user) => res.status(CREATED).json({
       _id: user._id,
       name: user.name,
-      about: user. about,
+      about: user.about,
       avatar: user.avatar,
       email: user.email,
     }))

@@ -5,8 +5,7 @@ const { auth } = require('../middlewares/auth');
 const routerUser = require('./users');
 const routerCard = require('./cards');
 const { login, createUser } = require('../controllers/users');
-const NotFoundError = require("../error/ErrorNotFound");
-
+const NotFoundError = require('../error/ErrorNotFound');
 
 const app = express();
 
