@@ -14,9 +14,9 @@ app.use(errors());
 /*app.use((err, req, res, next) => {
   handlerErrors(err, req);
 });*/
-app.use((err, req, res, next) => {
-  handlerErrors(err, req, res, next)
-});
+app.use(
+  handlerErrors
+);
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
