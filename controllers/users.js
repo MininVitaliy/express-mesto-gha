@@ -2,11 +2,11 @@ const bcrypt = require('bcryptjs');
 const { userNew } = require('../models/users');
 const {
   SUCCESS,
-  CREATED, CONFLICT_ERROR,
+  CREATED,
 } = require('../constants');
 const { createToken } = require('../middlewares/auth');
 const NotFoundError = require('../errors/ErrorNotFound');
-const ConflictError = require('../errors/ConflictError')
+const ConflictError = require('../errors/ConflictError');
 const ErrorCode = require('../errors/ErrorCode');
 
 const getUsers = async (req, res, next) => {
@@ -47,9 +47,8 @@ const createUser = (req, res, next) => {
       }
       if (err.code === 11000) {
         return next(new ConflictError('Указанный email уже занят'));
-        //res.status(CONFLICT_ERROR).json({ message: 'Указанный email уже занят' });
       }
-      next(err);
+      return next(err);
     });
 };
 
@@ -73,7 +72,7 @@ const getUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
     const user = await userNew.findById(_id);
-    if ( user === null) {
+    if (user === null) {
       return next(new NotFoundError('Пользователь не найден'));
     }
     return res.status(SUCCESS).json({ user });

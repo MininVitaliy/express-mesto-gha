@@ -54,17 +54,17 @@ const deleteCard = async (req, res, next) => {
 
 const likeCard = async (req, res, next) => {
   try {
-    const likeCard = await cardNew.findByIdAndUpdate(
+    const card = await cardNew.findByIdAndUpdate(
       req.params.cardId,
       {
         $addToSet: { likes: req.user._id },
       },
       { new: true },
     ).populate(['owner', 'likes']);
-    if (likeCard === null) {
+    if (card === null) {
       return next(new NotFoundError('Карточка не найдена'));
     }
-    return res.status(SUCCESS).json(likeCard);
+    return res.status(SUCCESS).json(card);
   } catch (e) {
     if (e.name === 'CastError') {
       return next(new ErrorCode('Переданы некорректные данные iD'));
@@ -78,17 +78,17 @@ const dislikeCard = async (req, res, next) => {
     if (req.user._id === null || req.user._id.length > 24) {
       return next(new NotFoundError('Передан несуществующий _id карточки'));
     }
-    const likeCard = await cardNew.findByIdAndUpdate(
+    const card = await cardNew.findByIdAndUpdate(
       req.params.cardId,
       {
         $pull: { likes: req.user._id },
       },
       { new: true },
     ).populate(['owner', 'likes']);
-    if (likeCard === null) {
+    if (card === null) {
       return next(new NotFoundError('Передан несуществующий _id карточки'));
     }
-    return res.status(SUCCESS).json(likeCard);
+    return res.status(SUCCESS).json(card);
   } catch (e) {
     if (e.name === 'CastError') {
       return next(new ErrorCode('Переданы некорректные данные iD'));
