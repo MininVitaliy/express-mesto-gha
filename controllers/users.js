@@ -2,10 +2,12 @@ const bcrypt = require('bcryptjs');
 const { userNew } = require('../models/users');
 const {
   SUCCESS,
-  CREATED,
+  CREATED, CONFLICT_ERROR,
 } = require('../constants');
 const { createToken } = require('../middlewares/auth');
-const NotFoundError = require('../error/ErrorNotFound');
+const NotFoundError = require('../errors/ErrorNotFound');
+const ConflictError = require('../errors/ConflictError')
+const ErrorCode = require('../errors/ErrorCode');
 
 const getUsers = async (req, res, next) => {
   try {
@@ -40,6 +42,13 @@ const createUser = (req, res, next) => {
       email: user.email,
     }))
     .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return next(new ErrorCode('Переданы некорректные данные в методы создания пользовтаеля'));
+      }
+      if (err.code === 11000) {
+        return next(new ConflictError('Указанный email уже занят'));
+        //res.status(CONFLICT_ERROR).json({ message: 'Указанный email уже занят' });
+      }
       next(err);
     });
 };
@@ -53,6 +62,9 @@ const getUserId = async (req, res, next) => {
     }
     return res.status(SUCCESS).json({ user });
   } catch (err) {
+    if (err.name === 'ValidationError') {
+      return next(new ErrorCode('Переданы некорректные данные iD'));
+    }
     return next(err);
   }
 };
@@ -61,6 +73,9 @@ const getUser = async (req, res, next) => {
   try {
     const { _id } = req.user;
     const user = await userNew.findById(_id);
+    if ( user === null) {
+      return next(new NotFoundError('Пользователь не найден'));
+    }
     return res.status(SUCCESS).json({ user });
   } catch (e) {
     return next(e);
@@ -69,7 +84,7 @@ const getUser = async (req, res, next) => {
 
 const updateProfile = async (req, res, next) => {
   try {
-    const changeProfile = await userNew.findByIdAndUpdate(
+    const profile = await userNew.findByIdAndUpdate(
       req.user._id,
       {
         name: req.body.name,
@@ -77,29 +92,35 @@ const updateProfile = async (req, res, next) => {
       },
       { new: true, runValidators: true },
     );
-    if (changeProfile === null) {
+    if (profile === null) {
       return next(new NotFoundError('Пользователь не найден'));
     }
-    return res.status(SUCCESS).json({ changeProfile });
+    return res.status(SUCCESS).json({ profile });
   } catch (e) {
+    if (e.name === 'ValidationError') {
+      return next(new ErrorCode('Переданы некорректные данные'));
+    }
     return next(e);
   }
 };
 
 const updateAvatar = async (req, res, next) => {
   try {
-    const changeProfile = await userNew.findByIdAndUpdate(
+    const profile = await userNew.findByIdAndUpdate(
       req.user._id,
       {
         avatar: req.body.avatar,
       },
       { new: true, runValidators: true },
     );
-    if (changeProfile === null) {
+    if (profile === null) {
       return next(new NotFoundError('Пользователь не найден'));
     }
-    return res.status(SUCCESS).json(changeProfile);
+    return res.status(SUCCESS).json(profile);
   } catch (e) {
+    if (e.name === 'ValidationError') {
+      return next(new ErrorCode('Переданы некорректные данные'));
+    }
     return next(e);
   }
 };

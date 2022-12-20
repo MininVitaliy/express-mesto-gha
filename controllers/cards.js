@@ -3,8 +3,9 @@ const {
   SUCCESS,
   CREATED,
 } = require('../constants');
-const NotFoundError = require('../error/ErrorNotFound');
-const ForbiddenError = require('../error/ForbiddenError');
+const NotFoundError = require('../errors/ErrorNotFound');
+const ForbiddenError = require('../errors/ForbiddenError');
+const ErrorCode = require('../errors/ErrorCode');
 
 const createCard = async (req, res, next) => {
   try {
@@ -15,6 +16,9 @@ const createCard = async (req, res, next) => {
     });
     return res.status(CREATED).json(cardUpdate);
   } catch (e) {
+    if (e.name === 'ValidationError') {
+      return next(new ErrorCode('Переданы некорректные данные в методы создания карточки'));
+    }
     return next(e);
   }
 };
@@ -41,24 +45,30 @@ const deleteCard = async (req, res, next) => {
     }
     return next(new ForbiddenError('Карточку нельзя удалять данным пользователем'));
   } catch (e) {
+    if (e.name === 'CastError') {
+      return next(new ErrorCode('Переданы некорректные данные iD'));
+    }
     return next(e);
   }
 };
 
 const likeCard = async (req, res, next) => {
   try {
-    const changeLikeCard = await cardNew.findByIdAndUpdate(
+    const likeCard = await cardNew.findByIdAndUpdate(
       req.params.cardId,
       {
         $addToSet: { likes: req.user._id },
       },
       { new: true },
     ).populate(['owner', 'likes']);
-    if (changeLikeCard === null) {
+    if (likeCard === null) {
       return next(new NotFoundError('Карточка не найдена'));
     }
-    return res.status(SUCCESS).json(changeLikeCard);
+    return res.status(SUCCESS).json(likeCard);
   } catch (e) {
+    if (e.name === 'CastError') {
+      return next(new ErrorCode('Переданы некорректные данные iD'));
+    }
     return next(e);
   }
 };
@@ -68,18 +78,21 @@ const dislikeCard = async (req, res, next) => {
     if (req.user._id === null || req.user._id.length > 24) {
       return next(new NotFoundError('Передан несуществующий _id карточки'));
     }
-    const changeLikeCard = await cardNew.findByIdAndUpdate(
+    const likeCard = await cardNew.findByIdAndUpdate(
       req.params.cardId,
       {
         $pull: { likes: req.user._id },
       },
       { new: true },
     ).populate(['owner', 'likes']);
-    if (changeLikeCard === null) {
+    if (likeCard === null) {
       return next(new NotFoundError('Передан несуществующий _id карточки'));
     }
-    return res.status(SUCCESS).json(changeLikeCard);
+    return res.status(SUCCESS).json(likeCard);
   } catch (e) {
+    if (e.name === 'CastError') {
+      return next(new ErrorCode('Переданы некорректные данные iD'));
+    }
     return next(e);
   }
 };
