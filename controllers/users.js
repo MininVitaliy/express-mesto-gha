@@ -61,7 +61,7 @@ const getUserId = async (req, res, next) => {
     }
     return res.status(SUCCESS).json({ user });
   } catch (err) {
-    if (err.name === 'ValidationError') {
+    if (err.name === 'CastError') {
       return next(new ErrorCode('Переданы некорректные данные iD'));
     }
     return next(err);
@@ -131,9 +131,7 @@ const login = (req, res, next) => {
       const token = createToken({ _id: user._id });
       res.status(SUCCESS).send({ token });
     })
-    .catch(() => {
-      const err = new Error('Необходима авторизация');
-      err.statusCode = 401;
+    .catch((err) => {
       next(err);
     });
 };

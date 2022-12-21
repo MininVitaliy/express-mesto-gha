@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
-const { handlerErrors } = require('./middlewares/authError');
+const { handlerErrors } = require('./middlewares/handlerErrors');
 const routes = require('./routes/routes');
 
 const PORT = 3000;
